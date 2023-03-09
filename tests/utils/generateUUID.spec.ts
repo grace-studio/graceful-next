@@ -2,8 +2,8 @@ import cryptoModule from 'crypto';
 import { generateUUID } from '../../src/utils';
 
 describe('generateUUID', () => {
-  it('should return a random UUID', () => {
-    expect(generateUUID()).toHaveLength(32);
+  it('should match pattern ^[a-z0-9]{32}$', () => {
+    expect(generateUUID()).toMatch(/^[a-z0-9]{32}$/);
   });
 
   it('should return a random UUID in browser', () => {

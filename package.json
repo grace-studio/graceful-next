@@ -10,12 +10,19 @@
     "./utils": {
       "import": "./lib/esm/utils/index.js",
       "require": "./lib/cjs/utils/index.js"
+    },
+    "./components": {
+      "import": "./lib/esm/components/index.js",
+      "require": "./lib/cjs/components/index.js"
     }
   },
   "typesVersions": {
     "*": {
       "utils": [
         "lib/types/utils/index.d.ts"
+      ],
+      "components": [
+        "lib/types/components/index.d.ts"
       ]
     }
   },
