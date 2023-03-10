@@ -11,7 +11,9 @@
 
 Generates a random string of 32 characters matching regex pattern `^[a-z0-9]{32}$`.
 
-```js
+```ts
+import { generateUUID } from '@grace-studio/graceful-next/utils';
+
 const randomString = generateUUID();
 // eg. 201c5ec765e54290a66a7495f70f0dea
 ```

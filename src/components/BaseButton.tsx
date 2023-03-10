@@ -1,10 +1,5 @@
 import Link from 'next/link';
-import React, {
-  FC,
-  PropsWithChildren,
-  useCallback,
-  useEffect
-  } from 'react';
+import React, { FC, PropsWithChildren, useCallback, useEffect } from 'react';
 
 export type BaseButtonProps = PropsWithChildren<{
   ariaLabel?: string;
@@ -12,8 +7,7 @@ export type BaseButtonProps = PropsWithChildren<{
   disabled?: boolean;
   onClick?: () => void;
   target?: '_self' | '_blank';
-  url?: string;
-  hotKey?: string;
+  href?: string;
   submit?: boolean;
 }>;
 
@@ -26,56 +20,35 @@ const BaseButton: FC<BaseButtonProps> = (props) => {
     disabled,
     onClick,
     target,
-    url,
-    hotKey,
+    href,
     submit,
   } = props;
 
-  const handleKeyDown = useCallback(
-    (event: KeyboardEvent) => {
-      const combo = event.metaKey || event.ctrlKey || event.altKey;
-      const key = event.key.toUpperCase();
-      if (!combo && hotKey?.toUpperCase() === key) {
-        onClick && onClick();
-      }
-    },
-    [hotKey, onClick]
-  );
-
-  useEffect(() => {
-    if (hotKey) {
-      document.body.addEventListener('keydown', handleKeyDown);
-    }
-
-    return () => {
-      if (hotKey) {
-        document.body.removeEventListener('keydown', handleKeyDown);
-      }
-    };
-  }, [handleKeyDown, hotKey]);
+  const buttonProps = {
+    'aria-label': ariaLabel,
+    'data-testid': 'base-button',
+    className,
+    disabled,
+  };
 
   if (disabled) {
-    return (
-      <button disabled className={className} aria-label={ariaLabel}>
-        {children}
-      </button>
-    );
+    return <button {...buttonProps}>{children}</button>;
   }
 
   if (submit) {
     return (
-      <button type="submit" className={className} aria-label={ariaLabel}>
+      <button type="submit" {...buttonProps}>
         {children}
       </button>
     );
   }
 
-  return url ? (
-    <Link href={url} className={className} onClick={onClick} target={target}>
+  return href ? (
+    <Link href={href} onClick={onClick} target={target} {...buttonProps}>
       {children}
     </Link>
   ) : (
-    <button className={className} onClick={onClick} aria-label={ariaLabel}>
+    <button onClick={onClick} {...buttonProps}>
       {children}
     </button>
   );
