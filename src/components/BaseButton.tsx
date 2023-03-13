@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, { FC, PropsWithChildren, useCallback, useEffect } from 'react';
+import React, { FC, PropsWithChildren } from 'react';
 
 export type BaseButtonProps = PropsWithChildren<{
   ariaLabel?: string;
