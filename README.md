@@ -27,6 +27,9 @@ const randomString = generateUUID();
 ## Components
 
 - [`BaseButton`](#basebutton)
+- [`BaseContentWrapper`](#basecontentwrapper)
+- [`IconWrapper`](#iconwrapper)
+- [`Metadata`](#metadata)
 
 ### `BaseButton`
 
@@ -54,3 +57,17 @@ return (
 )
 
 ```
+
+### `BaseContentWrapper`
+
+### `IconWrapper`
+
+### `Metadata`
+
+## Strapi
+
+- [`getBlockName`](#getblockname)
+
+### `getBlockName`
+
+## Types

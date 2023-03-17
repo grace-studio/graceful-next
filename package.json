@@ -14,6 +14,14 @@
     "./components": {
       "import": "./lib/esm/components/index.js",
       "require": "./lib/cjs/components/index.js"
+    },
+    "./types": {
+      "import": "./lib/esm/types/index.js",
+      "require": "./lib/cjs/types/index.js"
+    },
+    "./strapi": {
+      "import": "./lib/esm/strapi/index.js",
+      "require": "./lib/cjs/strapi/index.js"
     }
   },
   "typesVersions": {
@@ -23,6 +31,12 @@
       ],
       "components": [
         "lib/types/components/index.d.ts"
+      ],
+      "types": [
+        "lib/types/types/index.d.ts"
+      ],
+      "strapi": [
+        "lib/types/strapi/index.d.ts"
       ]
     }
   },
@@ -51,16 +65,19 @@
   "homepage": "https://github.com/grace-studio/graceful-next-core#readme",
   "peerDependencies": {
     "next": "13",
-    "tailwindcss": "3"
+    "tailwindcss": "3",
+    "classnames": "2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "14.0.0",
     "@testing-library/user-event": "14.4.3",
-    "@types/jest": "29.4.0",
-    "@types/node": "18.15.0",
+    "@types/jest": "29.5.0",
+    "@types/node": "18.15.3",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
+    "classnames": "2.3.2",
+    "eslint": "8.36.0",
     "eslint-config-prettier": "8.7.0",
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-prettier": "4.2.1",
@@ -72,7 +89,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "ts-jest": "29.0.5",
-    "typescript": "4.9.5"
+    "typescript": "5.0.2"
   },
   "directories": {
     "lib": "lib",

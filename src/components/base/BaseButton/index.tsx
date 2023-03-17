@@ -11,7 +11,7 @@ export type BaseButtonProps = PropsWithChildren<{
   submit?: boolean;
 }>;
 
-const BaseButton: FC<BaseButtonProps> = (props) => {
+export const BaseButton: FC<BaseButtonProps> = (props) => {
   const {
     ariaLabel,
     children,
@@ -53,5 +53,3 @@ const BaseButton: FC<BaseButtonProps> = (props) => {
     </button>
   );
 };
-
-export default BaseButton;

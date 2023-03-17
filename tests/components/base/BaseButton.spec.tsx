@@ -2,10 +2,9 @@
  * @jest-environment jsdom
  */
 
-import * as React from 'react';
-import BaseButton from '../../src/components/BaseButton';
+import React from 'react';
+import { BaseButton } from '../../../src/components/base';
 import { cleanup, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 
 describe('BaseButton', () => {
