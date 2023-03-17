@@ -17,7 +17,7 @@ export type IconWrapperProps = PropsWithChildren<
 
 const DEFAULT_SIZE = 24;
 
-export const IconWrapper: FC<IconWrapperProps> = (props) => {
+const IconWrapper: FC<IconWrapperProps> = (props) => {
   const {
     children,
     width = DEFAULT_SIZE,
@@ -46,3 +46,5 @@ export const IconWrapper: FC<IconWrapperProps> = (props) => {
     </div>
   );
 };
+
+export default IconWrapper;

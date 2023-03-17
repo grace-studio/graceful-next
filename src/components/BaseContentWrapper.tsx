@@ -27,7 +27,7 @@ export type BaseContentWrapperProps = PropsWithChildren<{
   sidePaddingClassName?: string;
 }>;
 
-export const BaseContentWrapper: FC<
+const BaseContentWrapper: FC<
   BaseContentWrapperProps & {
     contentWidthDefinition?: Record<ContentWidth, string[]>;
     marginAfterDefinition?: Record<MarginAfter, string[]>;
@@ -56,3 +56,5 @@ export const BaseContentWrapper: FC<
 
   return <Elem className={classes}>{children}</Elem>;
 };
+
+export default BaseContentWrapper;

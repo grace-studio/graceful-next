@@ -14,7 +14,7 @@ type MetadataProps = {
   metadata?: MetadataType;
 };
 
-export const Metadata: FC<MetadataProps> = (props) => {
+const Metadata: FC<MetadataProps> = (props) => {
   const { defaultMetadata, metadata } = props;
 
   return (
@@ -55,3 +55,5 @@ export const Metadata: FC<MetadataProps> = (props) => {
     </Head>
   );
 };
+
+export default Metadata;
