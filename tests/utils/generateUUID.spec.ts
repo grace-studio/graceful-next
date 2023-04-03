@@ -1,5 +1,5 @@
 import cryptoModule from 'crypto';
-import { generateUUID } from '../../src/utils';
+import { generateUUID } from '../../src/utils/generateUUID';
 
 describe('generateUUID', () => {
   it('should match pattern ^[a-z0-9]{32}$', () => {
