@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import type { FC } from 'react';
 import React from 'react';
-import { ImageObject } from '../types';
+import { ImageObject } from '../types/generic';
 
 export type MetadataType = {
   title: string;

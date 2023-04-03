@@ -16,7 +16,7 @@ const BaseButton: FC<BaseButtonProps> = (props) => {
     ariaLabel,
     children,
     className = 'h-14 px-10 bg-primary-dark text-primary-light\
-     hover:bg-links-hover whitespace-nowrap',
+     hover:bg-links-hover whitespace-nowrap flex items-center justify-center',
     disabled,
     onClick,
     target,
@@ -48,7 +48,13 @@ const BaseButton: FC<BaseButtonProps> = (props) => {
       {children}
     </Link>
   ) : (
-    <button onClick={onClick} {...buttonProps}>
+    <button
+      onClick={(e) => {
+        e.preventDefault();
+        onClick && onClick();
+      }}
+      {...buttonProps}
+    >
       {children}
     </button>
   );

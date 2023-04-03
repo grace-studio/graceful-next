@@ -2,53 +2,53 @@
   "name": "@grace-studio/graceful-next",
   "version": "0.0.5",
   "description": "",
-  "type": "module",
-  "files": [
-    "lib/**/*"
-  ],
+  "source": "src/index.ts",
   "exports": {
     "./utils": {
-      "import": "./lib/esm/utils/index.js",
-      "require": "./lib/cjs/utils/index.js"
+      "import": "./src/utils/index.ts",
+      "require": "./src/utils/index.ts"
     },
     "./components": {
-      "import": "./lib/esm/components/index.js",
-      "require": "./lib/cjs/components/index.js"
+      "import": "./src/components/index.ts",
+      "require": "./src/components/index.ts"
     },
     "./types": {
-      "import": "./lib/esm/types/index.js",
-      "require": "./lib/cjs/types/index.js"
+      "import": "./src/types/index.ts",
+      "require": "./src/types/index.ts"
     },
     "./strapi": {
-      "import": "./lib/esm/strapi/index.js",
-      "require": "./lib/cjs/strapi/index.js"
+      "import": "./src/strapi/index.ts",
+      "require": "./src/strapi/index.ts"
+    },
+    "./hooks": {
+      "import": "./src/hooks/index.ts",
+      "require": "./src/hooks/index.ts"
     }
   },
   "typesVersions": {
     "*": {
       "utils": [
-        "lib/types/utils/index.d.ts"
+        "src/utils/index.ts"
       ],
       "components": [
-        "lib/types/components/index.d.ts"
+        "src/components/index.ts"
       ],
       "types": [
-        "lib/types/types/index.d.ts"
+        "src/types/index.ts"
       ],
       "strapi": [
-        "lib/types/strapi/index.d.ts"
+        "src/strapi/index.ts"
+      ],
+      "hooks": [
+        "src/hooks/index.ts"
       ]
     }
   },
   "scripts": {
-    "build": "rm -rf lib && yarn build:esm && yarn build:cjs && yarn build:types",
-    "build:esm": "tsc",
-    "build:cjs": "tsc --module commonjs --outDir lib/cjs",
-    "build:types": "tsc --declarationDir lib/types --declaration --emitDeclarationOnly",
     "test": "jest",
     "coverage": "jest --coverage",
     "lint": "eslint",
-    "prepublishOnly": "yarn test && yarn lint && yarn build",
+    "prepublishOnly": "yarn test && yarn lint",
     "preversion": "yarn test && yarn lint",
     "postversion": "git push && git push --tags"
   },
@@ -64,11 +64,15 @@
   },
   "homepage": "https://github.com/grace-studio/graceful-next-core#readme",
   "peerDependencies": {
+    "classnames": "2",
     "next": "13",
-    "tailwindcss": "3",
-    "classnames": "2"
+    "tailwindcss": "3"
   },
   "devDependencies": {
+    "@babel/cli": "7.16.7",
+    "@babel/core": "7.16.7",
+    "@swc/cli": "0.1.55",
+    "@swc/core": "1.2.124",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "14.0.0",
     "@testing-library/user-event": "14.4.3",
@@ -94,5 +98,11 @@
   "directories": {
     "lib": "lib",
     "test": "tests"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "3.0.0",
+    "nanoid": "4.0.2",
+    "react-hook-form": "7.43.7",
+    "yup": "1.0.2"
   }
 }

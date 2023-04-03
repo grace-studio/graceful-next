@@ -1,7 +1,7 @@
 import { NextArray } from '../types';
 import { FC } from 'react';
 import React from 'react';
-import { getBlockName } from '../strapi';
+import { getBlockName } from '../strapi/getBlockName';
 
 export type DynamicZoneProps = {
   blocks: NextArray<{ __component: string } & object>;
