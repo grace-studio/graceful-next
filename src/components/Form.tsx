@@ -1,7 +1,9 @@
 import React, {
   forwardRef,
   PropsWithChildren,
+  useEffect,
   useImperativeHandle,
+  useRef,
 } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
@@ -15,7 +17,8 @@ import { ObjectSchema } from 'yup';
 import classNames from 'classnames';
 
 type FormProps = PropsWithChildren<{
-  onSubmit: (values: any) => void;
+  onSubmit: (values: Record<string, string>) => void;
+  onValuesChange?: (values: Record<string, string>) => void;
   validationSchema?: ObjectSchema<any>;
   defaultValues?: any;
   formProps?: UseFormProps;
@@ -27,6 +30,7 @@ export type FormRef = UseFormReturn;
 const Form = forwardRef<FormRef, FormProps>(function Form(
   {
     onSubmit,
+    onValuesChange,
     validationSchema,
     children,
     defaultValues,
@@ -38,8 +42,20 @@ const Form = forwardRef<FormRef, FormProps>(function Form(
   const methods = useForm({
     ...(validationSchema && { resolver: yupResolver(validationSchema) }),
     defaultValues,
+    shouldUnregister: true,
     ...formProps,
   });
+  const watch = methods.watch();
+  const formState = useRef<{values: Record<string, string>}>({values: {}});
+
+  useEffect(() => {
+    const currentValues = JSON.stringify(formState.current.values);
+
+    if (currentValues !== JSON.stringify(watch)) {
+      formState.current.values = {...watch};
+      onValuesChange && onValuesChange(watch);
+    }
+  }, [watch]);
 
   useImperativeHandle(ref, () => methods);
   const handleOnSubmit = (data: FieldValues) => onSubmit && onSubmit(data);
