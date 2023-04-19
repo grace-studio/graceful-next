@@ -4,9 +4,10 @@ import React, {
   forwardRef,
   useImperativeHandle,
 } from 'react';
-import { FC, FocusEvent, useEffect } from 'react';
+import { FocusEvent, useEffect } from 'react';
 import { FieldError, useFormContext } from 'react-hook-form';
 import { useMicroStore } from '../hooks/useMicroStore';
+import './input.css';
 
 export type InputState = {
   hasFocus: boolean;
@@ -22,6 +23,27 @@ const initialState: InputState = {
   value: '',
 };
 
+type BaseInputFieldAny = {
+  type: 'email' | 'text';
+};
+
+type BaseInputFieldNumber = {
+  type: 'number';
+  step?: string;
+  min?: string;
+  max?: string;
+};
+
+type InputMode =
+  | 'text'
+  | 'search'
+  | 'tel'
+  | 'url'
+  | 'email'
+  | 'numeric'
+  | 'decimal'
+  | 'none';
+
 export type BaseInputFieldProps = {
   name: string;
   label?: ReactNode;
@@ -29,8 +51,8 @@ export type BaseInputFieldProps = {
   placeholder?: string;
   disabled?: boolean;
   onStateChange?: (state: InputState) => void;
-  type: 'email' | 'text' | 'number';
-};
+  inputMode?: InputMode;
+} & (BaseInputFieldAny | BaseInputFieldNumber);
 
 export type BaseInputFieldRef = {
   setValue: (value: string) => void;
@@ -107,6 +129,21 @@ const BaseInputField = forwardRef<
             onChange={handleOnChange}
             id={name}
             className={className}
+            {...(props.type === 'number' &&
+              props.step === '1' && {
+                onKeyDown: (event) => {
+                  const isAllowed = [
+                    ...'0123456789',
+                    'Backspace',
+                    'Tab',
+                    'Enter',
+                  ].includes(event.key);
+
+                  if (!isAllowed) {
+                    event.preventDefault();
+                  }
+                },
+              })}
             {...props}
           />
           {note}
