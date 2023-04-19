@@ -1,4 +1,9 @@
-import React, { ChangeEvent, forwardRef, useImperativeHandle } from 'react';
+import React, {
+  ChangeEvent,
+  ReactNode,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 import { FC, FocusEvent, useEffect } from 'react';
 import { FieldError, useFormContext } from 'react-hook-form';
 import { useMicroStore } from '../hooks/useMicroStore';
@@ -19,7 +24,8 @@ const initialState: InputState = {
 
 export type BaseInputFieldProps = {
   name: string;
-  label?: string;
+  label?: ReactNode;
+  note?: ReactNode;
   placeholder?: string;
   disabled?: boolean;
   onStateChange?: (state: InputState) => void;
@@ -32,6 +38,7 @@ export type BaseInputFieldRef = {
 
 type InternalProps = {
   className?: string;
+  wrapperClasssName?: string;
   labelClassName?: string;
   errorClassName?: string;
 };
@@ -42,6 +49,8 @@ const BaseInputField = forwardRef<
 >(function BaseInputField(
   {
     label,
+    note,
+    wrapperClasssName = '',
     className = 'border-4 outline-none border-black bg-white h-10 w-full px-4 text-black disabled:bg-gray-200 disabled:text-gray-400',
     labelClassName = 'block',
     errorClassName = 'text-red-500',
@@ -90,15 +99,18 @@ const BaseInputField = forwardRef<
             {label}
           </label>
         )}
-        <input
-          {...register(name)}
-          onFocus={handleOnFocus}
-          onBlur={handleOnFocus}
-          onChange={handleOnChange}
-          id={name}
-          className={className}
-          {...props}
-        />
+        <div className={wrapperClasssName}>
+          <input
+            {...register(name)}
+            onFocus={handleOnFocus}
+            onBlur={handleOnFocus}
+            onChange={handleOnChange}
+            id={name}
+            className={className}
+            {...props}
+          />
+          {note}
+        </div>
         {state.errorMessage && !props.disabled && (
           <div className={errorClassName}>{state.errorMessage}</div>
         )}

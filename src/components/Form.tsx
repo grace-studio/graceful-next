@@ -46,13 +46,13 @@ const Form = forwardRef<FormRef, FormProps>(function Form(
     ...formProps,
   });
   const watch = methods.watch();
-  const formState = useRef<{values: Record<string, string>}>({values: {}});
+  const formState = useRef<{ values: Record<string, string> }>({ values: {} });
 
   useEffect(() => {
     const currentValues = JSON.stringify(formState.current.values);
 
     if (currentValues !== JSON.stringify(watch)) {
-      formState.current.values = {...watch};
+      formState.current.values = { ...watch };
       onValuesChange && onValuesChange(watch);
     }
   }, [watch]);
