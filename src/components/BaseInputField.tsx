@@ -7,7 +7,6 @@ import React, {
 import { FocusEvent, useEffect } from 'react';
 import { FieldError, useFormContext } from 'react-hook-form';
 import { useMicroStore } from '../hooks/useMicroStore';
-import './input.css';
 
 export type InputState = {
   hasFocus: boolean;
