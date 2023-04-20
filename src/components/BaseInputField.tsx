@@ -1,5 +1,6 @@
 import React, {
   ChangeEvent,
+  KeyboardEventHandler,
   ReactNode,
   forwardRef,
   useImperativeHandle,
@@ -12,7 +13,7 @@ export type InputState = {
   hasFocus: boolean;
   isTouched: boolean;
   errorMessage: string;
-  value: string;
+  value: string | number;
 };
 
 const initialState: InputState = {
@@ -108,8 +109,26 @@ const BaseInputField = forwardRef<
   };
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setValue(name, event.target.value);
-    dispatch({ value: event.target.value });
+    let newValue: string | number = event.target.value;
+
+    if (props.type === 'number') {
+      newValue = Number(newValue);
+
+      if (typeof props.max !== 'undefined') {
+        newValue = Math.min(newValue, Number(props.max));
+      }
+
+      if (typeof props.min !== 'undefined') {
+        newValue = Math.max(newValue, Number(props.min));
+      }
+
+      if (newValue === 0) {
+        newValue = '';
+      }
+    }
+
+    setValue(name, newValue);
+    dispatch({ value: newValue });
   };
 
   return (
@@ -128,21 +147,21 @@ const BaseInputField = forwardRef<
             onChange={handleOnChange}
             id={name}
             className={className}
-            {...(props.type === 'number' &&
-              props.step === '1' && {
-                onKeyDown: (event) => {
-                  const isAllowed = [
-                    ...'0123456789',
-                    'Backspace',
-                    'Tab',
-                    'Enter',
-                  ].includes(event.key);
+            onKeyDown={(event) => {
+              if (props.type === 'number' && props.step === '1') {
+                const isAllowed = [
+                  ...'0123456789',
+                  'Backspace',
+                  'Tab',
+                  'Enter',
+                ].includes(event.key);
 
-                  if (!isAllowed) {
-                    event.preventDefault();
-                  }
-                },
-              })}
+                if (!isAllowed) {
+                  event.preventDefault();
+                  return;
+                }
+              }
+            }}
             {...props}
           />
           {note}
