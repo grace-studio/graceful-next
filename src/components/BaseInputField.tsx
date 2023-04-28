@@ -48,6 +48,7 @@ export type BaseInputFieldProps = {
   name: string;
   label?: ReactNode;
   note?: ReactNode;
+  autocomplete?: string;
   placeholder?: string;
   disabled?: boolean;
   onStateChange?: (state: InputState) => void;
