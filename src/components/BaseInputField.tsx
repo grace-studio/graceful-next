@@ -1,9 +1,9 @@
 import React, {
   ChangeEvent,
-  KeyboardEventHandler,
   ReactNode,
   forwardRef,
   useImperativeHandle,
+  useRef,
 } from 'react';
 import { FocusEvent, useEffect } from 'react';
 import { FieldError, useFormContext } from 'react-hook-form';
@@ -48,7 +48,7 @@ export type BaseInputFieldProps = {
   name: string;
   label?: ReactNode;
   note?: ReactNode;
-  autocomplete?: string;
+  autoComplete?: string;
   placeholder?: string;
   disabled?: boolean;
   onStateChange?: (state: InputState) => void;
@@ -91,7 +91,10 @@ const BaseInputField = forwardRef<
   const [state, dispatch] = useMicroStore(initialState);
 
   useImperativeHandle(ref, () => ({
-    setValue: (value: string) => setValue(name, value),
+    setValue: (value: string) => {
+      setValue(name, value);
+      dispatch({ value });
+    },
   }));
 
   useEffect(() => {
