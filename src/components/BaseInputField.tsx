@@ -155,6 +155,10 @@ const BaseInputField = forwardRef<
               if (props.type === 'number' && props.step === '1') {
                 const isAllowed = [
                   ...'0123456789',
+                  'ArrowUp',
+                  'ArrowDown',
+                  'ArrowLeft',
+                  'ArrowRight',
                   'Backspace',
                   'Tab',
                   'Enter',
