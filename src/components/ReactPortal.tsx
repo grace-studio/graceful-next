@@ -20,7 +20,7 @@ const ReactPortal: FC<ReactPortalProps> = ({
 
   return mounted ? (
     createPortal(
-      children,
+      children as any, // Temporary fix for error in Next 13.4.0?
       document.querySelector(portalQuerySelector) as Element
     )
   ) : (
