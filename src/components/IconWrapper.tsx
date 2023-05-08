@@ -33,7 +33,7 @@ const IconWrapper: FC<IconWrapperProps> = (props) => {
   );
 
   return (
-    <div className={classes}>
+    <div className={classes} style={{ aspectRatio: `${width}/${height}` }}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width={width}
