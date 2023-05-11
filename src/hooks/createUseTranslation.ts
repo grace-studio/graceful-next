@@ -27,11 +27,12 @@ export const createUseTranslation =
     T extends Record<string, any> = object,
     L extends string = string
   >(
-    translations: Record<L, T>
+    translations: Record<L, T>,
+    defaultTranslation?: T
   ) =>
   () => {
     const { locale } = useRouter();
-    const translation = translations[locale as L];
+    const translation = translations[locale as L] || defaultTranslation;
 
     const get = (path: P) => getTranslation<T, P>(translation, path);
 
