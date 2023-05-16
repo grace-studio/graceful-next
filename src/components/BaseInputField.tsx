@@ -57,6 +57,7 @@ export type BaseInputFieldProps = {
 
 export type BaseInputFieldRef = {
   setValue: (value: string) => void;
+  setFocus: () => void;
 };
 
 type InternalProps = {
@@ -87,6 +88,7 @@ const BaseInputField = forwardRef<
     register,
     setValue,
     formState: { errors },
+    setFocus,
   } = useFormContext();
   const [state, dispatch] = useMicroStore(initialState);
 
@@ -94,6 +96,9 @@ const BaseInputField = forwardRef<
     setValue: (value: string) => {
       setValue(name, value);
       dispatch({ value });
+    },
+    setFocus: () => {
+      setFocus(name);
     },
   }));
 
