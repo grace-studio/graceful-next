@@ -3,7 +3,6 @@ import React, {
   ReactNode,
   forwardRef,
   useImperativeHandle,
-  useRef,
 } from 'react';
 import { FocusEvent, useEffect } from 'react';
 import { FieldError, useFormContext } from 'react-hook-form';
@@ -24,7 +23,7 @@ const initialState: InputState = {
 };
 
 type BaseInputFieldAny = {
-  type: 'email' | 'text';
+  type: 'email' | 'text' | 'search';
 };
 
 type BaseInputFieldNumber = {
