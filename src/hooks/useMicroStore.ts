@@ -6,10 +6,6 @@ export const useMicroStore = <T extends object>(
   const [state, setState] = useState<T>(initialState);
   const fastState = useRef<{ micro: object }>({ micro: {} });
 
-  useEffect(() => {
-    console.log({ state });
-  }, [state]);
-
   const dispatch = useCallback(
     (partialState: Partial<T>) => {
       const oldState = JSON.stringify(fastState.current.micro);
