@@ -74,7 +74,6 @@ const BaseInputField = forwardRef<
   {
     label,
     note,
-    maxLength,
     wrapperClasssName = '',
     className = 'border-4 outline-none border-black bg-white h-10 w-full px-4 text-black disabled:bg-gray-200 disabled:text-gray-400',
     labelClassName = 'block',
@@ -157,8 +156,15 @@ const BaseInputField = forwardRef<
             onChange={handleOnChange}
             id={name}
             className={className}
+            onInput={(event) => {
+              const elem = event.target as any;
+              if ((elem.maxLength || 0) > 0) {
+                elem.value = elem.value.slice(0, elem.maxLength);
+              }
+            }}
             onKeyDown={(event) => {
               let isAllowed = true;
+
               if (props.type === 'number' && props.step === '1') {
                 isAllowed = [
                   ...'0123456789',
@@ -170,11 +176,6 @@ const BaseInputField = forwardRef<
                   'Tab',
                   'Enter',
                 ].includes(event.key);
-              }
-
-              if (maxLength) {
-                const length = String(state.value || '').length;
-                isAllowed = maxLength > length;
               }
 
               if (!isAllowed) {
