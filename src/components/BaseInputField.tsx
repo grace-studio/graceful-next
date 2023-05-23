@@ -50,6 +50,7 @@ export type BaseInputFieldProps = {
   autoComplete?: string;
   placeholder?: string;
   disabled?: boolean;
+  maxLength?: number;
   onStateChange?: (state: InputState) => void;
   inputMode?: InputMode;
 } & (BaseInputFieldAny | BaseInputFieldNumber);
@@ -73,6 +74,7 @@ const BaseInputField = forwardRef<
   {
     label,
     note,
+    maxLength,
     wrapperClasssName = '',
     className = 'border-4 outline-none border-black bg-white h-10 w-full px-4 text-black disabled:bg-gray-200 disabled:text-gray-400',
     labelClassName = 'block',
@@ -156,8 +158,9 @@ const BaseInputField = forwardRef<
             id={name}
             className={className}
             onKeyDown={(event) => {
+              let isAllowed = true;
               if (props.type === 'number' && props.step === '1') {
-                const isAllowed = [
+                isAllowed = [
                   ...'0123456789',
                   'ArrowUp',
                   'ArrowDown',
@@ -167,11 +170,16 @@ const BaseInputField = forwardRef<
                   'Tab',
                   'Enter',
                 ].includes(event.key);
+              }
 
-                if (!isAllowed) {
-                  event.preventDefault();
-                  return;
-                }
+              if (maxLength) {
+                const length = String(state.value || '').length;
+                isAllowed = maxLength > length;
+              }
+
+              if (!isAllowed) {
+                event.preventDefault();
+                return;
               }
             }}
             {...props}
