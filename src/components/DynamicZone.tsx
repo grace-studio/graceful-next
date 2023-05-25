@@ -1,28 +1,27 @@
 import { NextArray } from '../types';
 import { FC } from 'react';
 import React from 'react';
-import { getBlockName } from '../strapi/getBlockName';
 
-export type DynamicZoneProps = {
-  blocks: NextArray<{ __component: string } & object>;
-  blockDefinition: Record<string, any>;
-} & object;
+export type DynamicZoneProps = object & {
+  blocks: NextArray<object & { blockName: string }>;
+  blockDefinition: object;
+};
 
 const DynamicZone: FC<DynamicZoneProps> = ({
-  blocks,
+  blocks = [],
   blockDefinition,
   ...props
 }) => (
   <>
-    {(blocks || []).map((block) => {
-      const blockName = getBlockName<typeof blockDefinition>(block);
-      const ImportedModule = blockDefinition[blockName] as any;
+    {blocks.map((block) => {
+      const name = block.blockName as keyof typeof blockDefinition;
+      const ImportedModule = blockDefinition[name] as any;
 
-      return (
-        ImportedModule && (
-          <ImportedModule key={block._key} block={block} {...props} />
-        )
-      );
+      return ImportedModule ? (
+        <div key={block._key} data-component-name={name}>
+          <ImportedModule block={block} {...props} />
+        </div>
+      ) : null;
     })}
   </>
 );
