@@ -9,10 +9,12 @@ export type BaseButtonProps = PropsWithChildren<{
   target?: '_self' | '_blank';
   href?: string;
   submit?: boolean;
+  id?: string;
 }>;
 
 const BaseButton: FC<BaseButtonProps> = (props) => {
   const {
+    id,
     ariaLabel,
     children,
     className = 'h-14 px-10 bg-primary-dark text-primary-light\
@@ -32,23 +34,34 @@ const BaseButton: FC<BaseButtonProps> = (props) => {
   };
 
   if (disabled) {
-    return <button {...buttonProps}>{children}</button>;
+    return (
+      <button id={id} {...buttonProps}>
+        {children}
+      </button>
+    );
   }
 
   if (submit) {
     return (
-      <button type="submit" {...buttonProps}>
+      <button id={id} type="submit" {...buttonProps}>
         {children}
       </button>
     );
   }
 
   return href ? (
-    <Link href={href} onClick={onClick} target={target} {...buttonProps}>
+    <Link
+      id={id}
+      href={href}
+      onClick={onClick}
+      target={target}
+      {...buttonProps}
+    >
       {children}
     </Link>
   ) : (
     <button
+      id={id}
       onClick={(e) => {
         e.preventDefault();
         onClick && onClick();
