@@ -21,6 +21,7 @@ const contentWidthClasses: Record<ContentWidth, string[]> = {
 };
 
 export type BaseContentWrapperProps = PropsWithChildren<{
+  id?: string;
   elementType?: string;
   className?: string;
   marginAfter?: MarginAfter;
@@ -36,6 +37,7 @@ const BaseContentWrapper: FC<
 > = (props) => {
   const {
     children,
+    id,
     elementType = 'div',
     marginAfter = 'medium',
     contentWidth = 'normal',
@@ -55,7 +57,11 @@ const BaseContentWrapper: FC<
 
   const Elem = elementType as keyof JSX.IntrinsicElements;
 
-  return <Elem className={classes}>{children}</Elem>;
+  return (
+    <Elem id={id} className={classes}>
+      {children}
+    </Elem>
+  );
 };
 
 export default BaseContentWrapper;
