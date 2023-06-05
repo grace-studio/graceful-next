@@ -13,13 +13,23 @@ export default function Home() {
         <div className="grid grid-cols-1 gap-10">
           <BaseInputField
             // integer
-            name="number"
-            placeholder="Number input test"
+            name="decimal"
+            placeholder="Number input test - decimal"
             type="number"
             // decimalPoint="."
-            min={20}
-            max={300}
-            inputMode="decimal"
+            // min={20}
+            // max={300}
+            // inputMode="decimal"
+          />
+          <BaseInputField
+            integer
+            name="integer"
+            placeholder="Number input test - integer"
+            type="number"
+            // decimalPoint="."
+            // min={20}
+            // max={300}
+            // inputMode="decimal"
           />
           <BaseButton submit>Submit</BaseButton>
         </div>

@@ -83,6 +83,7 @@ const BaseInputField = forwardRef<
     errorClassName = 'text-red-500',
     onStateChange,
     name,
+    inputMode: _inputMode,
     ...props
   },
   ref
@@ -94,6 +95,17 @@ const BaseInputField = forwardRef<
     setFocus,
   } = useFormContext();
   const [state, dispatch] = useMicroStore(initialState);
+
+  let inputMode = _inputMode;
+  if (!inputMode) {
+    if (props.type === 'number' && props.integer) {
+      inputMode = 'numeric';
+    }
+
+    if (props.type === 'number' && !props.integer) {
+      inputMode = 'decimal';
+    }
+  }
 
   const decimalPoint = props.type === 'number' ? props.decimalPoint : '.';
   const integer = props.type === 'number' ? props.integer : false;
@@ -239,6 +251,7 @@ const BaseInputField = forwardRef<
             onChange={handleOnChange}
             onInput={handleOnInput}
             onKeyDown={handleOnKeyDown}
+            inputMode={inputMode}
             {...props}
             type={props.type === 'number' ? 'text' : props.type}
           />
