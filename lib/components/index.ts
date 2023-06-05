@@ -32,6 +32,7 @@ export type {
 } from './BaseRadioButton';
 
 export { default as Form } from './Form';
+export type { FormRef } from './Form';
 
 export { default as BaseAccordion } from './BaseAccordion';
 
