@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "allowUnreachableCode": false,
+    "declaration": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["esnext", "dom"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "outDir": "out/esm",
+    "removeComments": true,
+    "rootDir": "lib",
+    "jsx": "react",
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "es6"
+  },
+  "exclude": ["node_modules", "out"],
+  "include": ["lib"]
+}

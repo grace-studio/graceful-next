@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { BaseButton } from '../../src/components';
+import { BaseButton } from '../../lib/components';
 import { cleanup, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 

@@ -17,8 +17,8 @@ const BaseButton: FC<BaseButtonProps> = (props) => {
     id,
     ariaLabel,
     children,
-    className = 'h-14 px-10 bg-primary-dark text-primary-light\
-     hover:bg-links-hover whitespace-nowrap flex items-center justify-center',
+    className = 'h-16 px-10 bg-gray-900 text-gray-100 \
+    hover:bg-links-hover whitespace-nowrap text-lg flex items-center justify-center',
     disabled,
     onClick,
     target,
@@ -31,37 +31,27 @@ const BaseButton: FC<BaseButtonProps> = (props) => {
     'data-testid': 'base-button',
     className,
     disabled,
+    id,
   };
 
   if (disabled) {
-    return (
-      <button id={id} {...buttonProps}>
-        {children}
-      </button>
-    );
+    return <button {...buttonProps}>{children}</button>;
   }
 
   if (submit) {
     return (
-      <button id={id} type="submit" {...buttonProps}>
+      <button type="submit" {...buttonProps}>
         {children}
       </button>
     );
   }
 
   return href ? (
-    <Link
-      id={id}
-      href={href}
-      onClick={onClick}
-      target={target}
-      {...buttonProps}
-    >
+    <Link href={href} onClick={onClick} target={target} {...buttonProps}>
       {children}
     </Link>
   ) : (
     <button
-      id={id}
       onClick={(e) => {
         e.preventDefault();
         onClick && onClick();
