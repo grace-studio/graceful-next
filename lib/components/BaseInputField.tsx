@@ -97,6 +97,7 @@ const BaseInputField = forwardRef<
   const [state, dispatch] = useMicroStore(initialState);
 
   let inputMode = _inputMode;
+  // Set default input mode
   if (!inputMode) {
     if (props.type === 'number' && props.integer) {
       inputMode = 'numeric';
@@ -153,7 +154,7 @@ const BaseInputField = forwardRef<
   const handleNumberInput = (value: string) => {
     let returnValue = value;
     // Strip unwanted characters
-    returnValue = returnValue.replace(/[^\d\,\.]/g, '');
+    returnValue = returnValue.replace(/[^\d\,\.\-]/g, '');
 
     // Replace decimal point with dot
     const dPoint = decimalPoint || '.';
@@ -165,13 +166,17 @@ const BaseInputField = forwardRef<
       returnValue = `${first || '0'}.${parts.join('')}`;
     }
 
+    if (returnValue === '-.') {
+      returnValue = '-0.';
+    }
+
     // Check if valid number
-    if (isNaN(Number(returnValue))) {
+    if (returnValue && returnValue !== '-' && isNaN(Number(returnValue))) {
       returnValue = '';
     }
 
     // Round if integer
-    if (integer) {
+    if (returnValue && returnValue !== '-' && integer) {
       returnValue = Math.round(Number(returnValue)).toString();
     }
 
@@ -208,6 +213,7 @@ const BaseInputField = forwardRef<
   };
 
   const handleOnKeyDown = (event: any) => {
+    const elem = event.target as any;
     const { metaKey, ctrlKey, altKey } = event;
 
     if (metaKey || ctrlKey || altKey) {
@@ -215,8 +221,8 @@ const BaseInputField = forwardRef<
     }
 
     if (props.type === 'number') {
-      const isAllowed = [
-        ...'0123456789,.',
+      let isAllowed = [
+        ...'0123456789,.-',
         'ArrowUp',
         'ArrowDown',
         'ArrowLeft',
@@ -225,6 +231,10 @@ const BaseInputField = forwardRef<
         'Tab',
         'Enter',
       ].includes(event.key);
+
+      if (elem.value.length > 0 && event.key === '-') {
+        isAllowed = false;
+      }
 
       if (!isAllowed) {
         event.preventDefault();

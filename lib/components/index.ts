@@ -24,6 +24,20 @@ export type {
   BaseInputFieldRef,
 } from './BaseInputField';
 
+export { default as BaseInputFile } from './BaseInputFile';
+export type {
+  FileInputState,
+  BaseInputFileProps,
+  BaseInputFileRef,
+} from './BaseInputFile';
+
+export { default as BaseTextArea } from './BaseTextArea';
+export type {
+  TextAreaState,
+  BaseTextAreaProps,
+  BaseTextAreaRef,
+} from './BaseTextArea';
+
 export { default as BaseRadioButton } from './BaseRadioButton';
 export type {
   RadioButtonState,

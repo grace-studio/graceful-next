@@ -50,10 +50,11 @@ const Form = forwardRef<FormRef, FormProps>(function Form(
 
   useEffect(() => {
     const currentValues = JSON.stringify(formState.current.values);
+    const newValues = JSON.stringify(watch);
 
-    if (currentValues !== JSON.stringify(watch)) {
-      formState.current.values = { ...watch };
-      onValuesChange && onValuesChange(watch);
+    if (currentValues !== newValues) {
+      formState.current.values = JSON.parse(newValues);
+      onValuesChange && onValuesChange(JSON.parse(newValues));
     }
   }, [watch]);
 
