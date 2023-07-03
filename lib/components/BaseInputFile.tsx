@@ -59,7 +59,7 @@ const BaseInputFile = forwardRef<
     label,
     note = '⬆️',
     uploadLabel,
-    className = 'hidden',
+    className = 'opacity-0 h-0 w-0 absolute pointer-events-none',
     wrapperClassName = 'border-4 outline-none border-gray-900 bg-gray-100 h-16 text-lg w-full \
     px-6 text-black disabled:bg-gray-200 disabled:text-gray-400 focus:border-fuchsia-600 grid grid-cols-[1fr_auto] content-center',
     labelClassName = 'flex items-center',

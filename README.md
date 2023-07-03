@@ -6,6 +6,33 @@
 
 Uses Tailwind etc.
 
+## Installation
+
+```
+yarn add @grace-studio/graceful-next
+```
+
+Add transpiling of packge to Next.js config file - `next.config.js`
+
+```js
+const nextConfig = {
+  ...
+  transpilePackages: ["@grace-studio/graceful-next"],
+};
+```
+
+Add CSS scanning for Tailwind config file - `tailwind.config.js`
+
+```js
+module.exports = {
+  content: [
+    './src/**/*.{js,ts,jsx,tsx}',
+    './node_modules/@grace-studio/graceful-next/src/**/*.tsx',
+  ],
+  ...
+};
+```
+
 <!-- ## COMPONENTS ## -->
 
 ## Components
