@@ -222,7 +222,19 @@ const BaseInputField = forwardRef<
 
     if (props.type === 'number') {
       let isAllowed = [
-        ...'0123456789,.-',
+        '0',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        ',',
+        '.',
+        '-',
         'ArrowUp',
         'ArrowDown',
         'ArrowLeft',

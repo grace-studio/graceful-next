@@ -5,3 +5,4 @@ export * from './useMousePosition';
 export * from './usePreventBodyScroll';
 export * from './useOutsideClick';
 export * from './useGoogleTagManager';
+export * from './useIsClient';
