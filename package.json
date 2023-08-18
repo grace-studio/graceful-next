@@ -1,6 +1,6 @@
 {
   "name": "@grace-studio/graceful-next",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "",
   "source": "lib/index.ts",
   "exports": {
