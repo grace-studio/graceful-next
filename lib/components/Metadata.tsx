@@ -14,6 +14,11 @@ type MetadataProps = {
   metadata?: MetadataType;
 };
 
+const resolveImageUrl = (path?: string) =>
+  path && (path.startsWith('http:') || path.startsWith('https:'))
+    ? path
+    : `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${path || ''}`;
+
 const Metadata: FC<MetadataProps> = (props) => {
   const { defaultMetadata, metadata } = props;
 
@@ -47,9 +52,9 @@ const Metadata: FC<MetadataProps> = (props) => {
       {(metadata?.shareImage || defaultMetadata?.shareImage) && (
         <meta
           property="og:image"
-          content={
+          content={resolveImageUrl(
             metadata?.shareImage?.url || defaultMetadata?.shareImage?.url
-          }
+          )}
         />
       )}
     </Head>
