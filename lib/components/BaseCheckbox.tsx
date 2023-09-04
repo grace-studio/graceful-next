@@ -1,5 +1,4 @@
 import React, {
-  ChangeEvent,
   forwardRef,
   ReactNode,
   useImperativeHandle,
@@ -8,45 +7,42 @@ import { FocusEvent, useEffect } from 'react';
 import { FieldError, useFormContext, useWatch } from 'react-hook-form';
 import { useMicroStore } from '../hooks/useMicroStore';
 
-export type RadioButtonState = {
+export type CheckboxState = {
   hasFocus: boolean;
   isTouched: boolean;
   errorMessage: string;
-  value: string;
   checked: boolean;
 };
 
-const initialState: RadioButtonState = {
+const initialState: CheckboxState = {
   hasFocus: false,
   isTouched: false,
   errorMessage: '',
-  value: '',
   checked: false,
 };
 
-export type BaseRadioButtonProps = {
+export type BaseCheckboxProps = {
   name: string;
-  value: string;
   label?: ReactNode;
   disabled?: boolean;
-  onStateChange?: (state: RadioButtonState) => void;
+  onStateChange?: (state: CheckboxState) => void;
 };
 
-export type BaseRadioButtonRef = {
-  setValue: (value: string) => void;
+export type BaseCheckboxRef = {
+  setChecked: (checked: boolean) => void;
 };
 
 type InternalProps = {
-  className?: string;
   wrapperClassName?: string;
+  className?: string;
   labelClassName?: string;
   errorClassName?: string;
 };
 
-const BaseRadioButton = forwardRef<
-  BaseRadioButtonRef,
-  BaseRadioButtonProps & InternalProps
->(function BaseRadioButton(
+const BaseCheckbox = forwardRef<
+  BaseCheckboxRef,
+  BaseCheckboxProps & InternalProps
+>(function BaseCheckbox(
   {
     label,
     wrapperClassName = 'flex items-center justify-between',
@@ -55,7 +51,6 @@ const BaseRadioButton = forwardRef<
     errorClassName = 'text-red-500',
     onStateChange,
     name,
-    value,
     ...props
   },
   ref
@@ -68,7 +63,7 @@ const BaseRadioButton = forwardRef<
   const [state, dispatch] = useMicroStore(initialState);
 
   useImperativeHandle(ref, () => ({
-    setValue: (value: string) => setValue(name, value),
+    setChecked: (checked: boolean) => setValue(name, checked),
   }));
 
   const currentValue = useWatch({ name });
@@ -76,7 +71,7 @@ const BaseRadioButton = forwardRef<
   useEffect(() => {
     const newState = {
       ...state,
-      checked: String(currentValue) === String(value),
+      checked: currentValue,
     };
     onStateChange && onStateChange(newState);
     dispatch(newState);
@@ -101,9 +96,9 @@ const BaseRadioButton = forwardRef<
     hasFocus && dispatch({ isTouched: true });
   };
 
-  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setValue(name, event.target.value);
-    dispatch({ value: event.target.value });
+  const handleOnClick = () => {
+    setValue(name, !state.checked);
+    dispatch({ checked: !state.checked });
   };
 
   return (
@@ -111,7 +106,7 @@ const BaseRadioButton = forwardRef<
       <div className="relative">
         <div className={wrapperClassName}>
           {label && (
-            <label className={labelClassName} htmlFor={`${name}-${value}`}>
+            <label className={labelClassName} htmlFor={name}>
               {label}
             </label>
           )}
@@ -119,11 +114,10 @@ const BaseRadioButton = forwardRef<
             {...register(name)}
             onFocus={handleOnFocus}
             onBlur={handleOnFocus}
-            onChange={handleOnChange}
-            id={`${name}-${value}`}
+            onClick={handleOnClick}
+            id={name}
             className={className}
-            value={value}
-            type="radio"
+            type="checkbox"
             {...props}
           />
         </div>
@@ -135,4 +129,4 @@ const BaseRadioButton = forwardRef<
   );
 });
 
-export default BaseRadioButton;
+export default BaseCheckbox;
