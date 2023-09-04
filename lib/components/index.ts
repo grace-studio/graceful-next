@@ -45,6 +45,13 @@ export type {
   BaseRadioButtonRef,
 } from './BaseRadioButton';
 
+export { default as BaseCheckbox } from './BaseCheckbox';
+export type {
+  CheckboxState,
+  BaseCheckboxProps,
+  BaseCheckboxRef,
+} from './BaseCheckbox';
+
 export { default as Form } from './Form';
 export type { FormRef } from './Form';
 

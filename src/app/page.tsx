@@ -61,10 +61,9 @@ export default function Home() {
               'transition-all after:transition-all after:duration-700 duration-700',
               toggle ? 'bg-red-400' : 'bg-gray-200',
               toggle ? 'after:translate-x-full' : '',
-            )} 
+            )}
           />
-
-
+          
           <BaseButton submit>Submit</BaseButton>
         </div>
       </Form>
