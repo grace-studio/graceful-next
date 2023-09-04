@@ -34,16 +34,18 @@ const initialState: AccordionState = {
 };
 
 type BaseAccordionProps = PropsWithChildren<{
+  initiallyOpen?: boolean;
   transitionClassName?: string;
   onStateChange?: (state: AccordionState) => void;
 }>;
 
 const BaseAccordion = ({
   transitionClassName,
+  initiallyOpen,
   children,
   onStateChange,
 }: BaseAccordionProps) => {
-  const [state, dispatch] = useMicroStore(initialState);
+  const [state, dispatch] = useMicroStore({...initialState, isOpen: initiallyOpen || initialState.isOpen});
   const [title, setTitle] = useState<ReactNode>();
   const [content, setContent] = useState<ReactNode>();
   const ref = useRef<HTMLDivElement>(null);

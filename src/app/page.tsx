@@ -5,6 +5,7 @@ import {
   BaseInputField,
   BaseButton,
   BaseRadioButton,
+  BaseAccordion,
 } from '@grace-studio/graceful-next/components';
 import BaseCheckbox from '@grace-studio/graceful-next/components/BaseCheckbox';
 import BaseInputFile from '@grace-studio/graceful-next/components/BaseInputFile';
@@ -67,6 +68,16 @@ export default function Home() {
           <BaseButton submit>Submit</BaseButton>
         </div>
       </Form>
+
+      <BaseAccordion
+      initiallyOpen
+      transitionClassName="transition-all duration-1000"
+    >
+      <BaseAccordion.Title className="">
+        <div>title</div>
+      </BaseAccordion.Title>
+      <BaseAccordion.Content className="pt-4">child</BaseAccordion.Content>
+    </BaseAccordion>
     </BaseContentWrapper>
   );
 }
