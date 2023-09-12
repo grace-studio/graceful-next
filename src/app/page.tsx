@@ -9,8 +9,28 @@ import {
 } from '@grace-studio/graceful-next/components';
 import BaseCheckbox from '@grace-studio/graceful-next/components/BaseCheckbox';
 import BaseInputFile from '@grace-studio/graceful-next/components/BaseInputFile';
+import BaseSelect from '@grace-studio/graceful-next/components/BaseSelect';
 import classNames from 'classnames';
 import { useState } from 'react';
+
+const selectOptions = [
+  {
+    label: 'name 1',
+    value: 'value-1',
+  },
+  {
+    label: 'name 2',
+    value: 'value-2',
+  },
+  {
+    label: 'name 3',
+    value: 'value-3',
+  },
+  {
+    label: 'name 4',
+    value: 'value-4',
+  },
+]
 
 export default function Home() {
   const [toggle, setToggle] = useState(true);
@@ -46,6 +66,12 @@ export default function Home() {
             label="Filesss"
             name="file"
             onFilesChange={console.log}
+          />
+          <BaseSelect
+            label="Select"
+            name="select"
+            onStateChange={console.log}
+            options={selectOptions}
           />
 
           <BaseRadioButton name="radio" value="val1" label="label 1" />
