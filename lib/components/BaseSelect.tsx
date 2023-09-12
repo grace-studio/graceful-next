@@ -98,13 +98,13 @@ const BaseSelect = forwardRef<
     onStateChange && onStateChange(state);
   }, [onStateChange, state]);
 
-  const handleOnFocus = (event: FocusEvent<HTMLInputElement>) => {
+  const handleOnFocus = (event: FocusEvent<HTMLSelectElement>) => {
     const hasFocus = event.type === 'focus';
     dispatch({ hasFocus });
     hasFocus && dispatch({ isTouched: true });
   };
 
-  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleOnChange = (event: ChangeEvent<HTMLSelectElement>) => {
     let newValue: string | number = event.target.value;
 
     setValue(name, newValue);
