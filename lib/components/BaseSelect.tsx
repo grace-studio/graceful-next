@@ -8,14 +8,14 @@ import { FocusEvent, useEffect } from 'react';
 import { FieldError, useFormContext } from 'react-hook-form';
 import { useMicroStore } from '../hooks/useMicroStore';
 
-export type InputState = {
+export type SelectState = {
   hasFocus: boolean;
   isTouched: boolean;
   errorMessage: string;
   value: string | number;
 };
 
-const initialState: InputState = {
+const initialState: SelectState = {
   hasFocus: false,
   isTouched: false,
   errorMessage: '',
@@ -30,7 +30,7 @@ export type BaseSelectProps = {
   placeholder?: string;
   disabled?: boolean;
   maxLength?: number;
-  onStateChange?: (state: InputState) => void;
+  onStateChange?: (state: SelectState) => void;
   pattern?: string;
   options: {label:string,value:string}[];
   defaultValue?:string;

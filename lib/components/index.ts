@@ -45,6 +45,13 @@ export type {
   BaseRadioButtonRef,
 } from './BaseRadioButton';
 
+export { default as BaseSelect } from './BaseSelect';
+export type {
+  SelectState,
+  BaseSelectProps,
+  BaseSelectRef,
+} from './BaseSelect';
+
 export { default as BaseCheckbox } from './BaseCheckbox';
 export type {
   CheckboxState,
