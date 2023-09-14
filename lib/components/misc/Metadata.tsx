@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import type { FC } from 'react';
 import React from 'react';
-import { ImageObject } from '../types/generic';
+import { ImageObject } from '../../types/generic';
 
 export type MetadataType = {
   title: string;
@@ -53,7 +53,7 @@ const Metadata: FC<MetadataProps> = (props) => {
         <meta
           property="og:image"
           content={resolveImageUrl(
-            metadata?.shareImage?.url || defaultMetadata?.shareImage?.url
+            metadata?.shareImage?.url || defaultMetadata?.shareImage?.url,
           )}
         />
       )}

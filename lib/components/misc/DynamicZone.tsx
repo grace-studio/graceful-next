@@ -1,4 +1,4 @@
-import { NextArray } from '../types';
+import { NextArray } from '../../types';
 import { FC } from 'react';
 import React from 'react';
 
