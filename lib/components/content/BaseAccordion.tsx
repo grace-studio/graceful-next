@@ -1,6 +1,5 @@
 import classNames from 'classnames';
-import React from 'react';
-import {
+import React, {
   Children,
   CSSProperties,
   FC,
@@ -11,7 +10,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useMicroStore } from '../hooks';
+import { useMicroStore } from '../../hooks';
 
 const BaseAccordionTitle: FC<PropsWithChildren<{ className?: string }>> = ({
   children,
@@ -37,15 +36,20 @@ type BaseAccordionProps = PropsWithChildren<{
   initiallyOpen?: boolean;
   transitionClassName?: string;
   onStateChange?: (state: AccordionState) => void;
+  className?: string;
 }>;
 
 const BaseAccordion = ({
-  transitionClassName,
+  transitionClassName = 'transition-all duration-300',
   initiallyOpen,
   children,
   onStateChange,
+  className = 'border-4 border-gray-900 bg-gray-100',
 }: BaseAccordionProps) => {
-  const [state, dispatch] = useMicroStore({...initialState, isOpen: initiallyOpen || initialState.isOpen});
+  const [state, dispatch] = useMicroStore({
+    ...initialState,
+    isOpen: initiallyOpen || initialState.isOpen,
+  });
   const [title, setTitle] = useState<ReactNode>();
   const [content, setContent] = useState<ReactNode>();
   const ref = useRef<HTMLDivElement>(null);
@@ -68,12 +72,16 @@ const BaseAccordion = ({
 
       if (child.type === BaseAccordionTitle) {
         dispatch({
-          titleClassName: child.props.className,
+          titleClassName:
+            child.props.className ??
+            'p-4 text-lg text-left hover:bg-gray-300 \
+            outline outline-4 outline-transparent focus-within:outline-fuchsia-600',
         });
         setTitle(child);
       } else if (child.type === BaseAccordionContent) {
         dispatch({
-          contentClassName: child.props.className,
+          contentClassName:
+            child.props.className ?? 'p-4 text-lg border-t-2 border-gray-300',
         });
         setContent(child);
       }
@@ -89,7 +97,7 @@ const BaseAccordion = ({
   const contentClasses = classNames(state.contentClassName);
 
   return (
-    <>
+    <div className={className}>
       <button
         className={titleClasses}
         aria-expanded={state.isOpen}
@@ -102,7 +110,7 @@ const BaseAccordion = ({
           {content}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

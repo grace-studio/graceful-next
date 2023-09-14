@@ -18,7 +18,8 @@ const BaseButton: FC<BaseButtonProps> = (props) => {
     ariaLabel,
     children,
     className = 'h-16 px-10 bg-gray-900 text-gray-100 \
-    hover:bg-links-hover whitespace-nowrap text-lg flex items-center justify-center',
+    hover:bg-links-hover whitespace-nowrap text-lg flex items-center justify-center \
+    outline outline-4 outline-offset-2 outline-transparent focus-within:outline-fuchsia-600',
     disabled,
     onClick,
     target,

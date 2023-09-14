@@ -1,6 +1,5 @@
 import classNames from 'classnames';
-import React from 'react';
-import { FC, PropsWithChildren } from 'react';
+import React, { FC, PropsWithChildren } from 'react';
 
 export type MarginAfter = 'none' | 'small' | 'medium' | 'large';
 
@@ -52,7 +51,7 @@ const BaseContentWrapper: FC<
     sidePaddingClassName,
     ...marginAfterDefinition[marginAfter],
     ...contentWidthDefinition[contentWidth],
-    className
+    className,
   );
 
   const Elem = elementType as keyof JSX.IntrinsicElements;

@@ -3,10 +3,11 @@ import React, {
   ReactNode,
   forwardRef,
   useImperativeHandle,
+  FocusEvent,
+  useEffect,
 } from 'react';
-import { FocusEvent, useEffect } from 'react';
 import { FieldError, useFormContext } from 'react-hook-form';
-import { useMicroStore } from '../hooks/useMicroStore';
+import { useMicroStore } from '../../hooks/useMicroStore';
 
 export type InputState = {
   hasFocus: boolean;
@@ -86,7 +87,7 @@ const BaseInputField = forwardRef<
     inputMode: _inputMode,
     ...props
   },
-  ref
+  ref,
 ) {
   const {
     register,

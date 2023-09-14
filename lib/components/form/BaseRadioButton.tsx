@@ -3,10 +3,11 @@ import React, {
   forwardRef,
   ReactNode,
   useImperativeHandle,
+  FocusEvent,
+  useEffect,
 } from 'react';
-import { FocusEvent, useEffect } from 'react';
 import { FieldError, useFormContext, useWatch } from 'react-hook-form';
-import { useMicroStore } from '../hooks/useMicroStore';
+import { useMicroStore } from '../../hooks/useMicroStore';
 
 export type RadioButtonState = {
   hasFocus: boolean;
@@ -49,16 +50,18 @@ const BaseRadioButton = forwardRef<
 >(function BaseRadioButton(
   {
     label,
-    wrapperClassName = 'flex items-center justify-between',
-    className = 'border-4 outline-none border-black bg-white h-10 w-full px-4 text-black disabled:bg-gray-200 disabled:text-gray-400',
-    labelClassName = 'block',
+    wrapperClassName = 'grid grid-cols-[1fr_auto] items-center \
+    outline outline-4 outline-offset-2 outline-transparent focus-within:outline-fuchsia-600',
+    className = 'block appearance-none border-4 rounded-full \
+    outline-none border-gray-900 bg-gray-100 h-8 w-8 checked:bg-red-400',
+    labelClassName = 'block text-lg',
     errorClassName = 'text-red-500',
     onStateChange,
     name,
     value,
     ...props
   },
-  ref
+  ref,
 ) {
   const {
     register,

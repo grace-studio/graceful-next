@@ -1,24 +1,28 @@
 import classNames from 'classnames';
-import ReactPortal from './ReactPortal';
-import { FC, PropsWithChildren, useCallback } from 'react';
-import { usePreventBodyScroll } from '../hooks';
-import React from 'react';
+import { FocusTrap, ReactPortal } from '..';
+import React, {
+  FC,
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import { usePreventBodyScroll } from '../../hooks';
 
 type Position = 'left' | 'right' | 'top' | 'bottom' | 'center';
 type Transition = 'fade' | 'slide';
 type Speed = 'fast' | 'medium' | 'slow';
 
 type DrawerProps = PropsWithChildren<{
+  disableFocusTrap?: boolean;
   isOpen?: boolean;
   onClose?: () => void;
-  onOpen?: () => void;
   className?: string;
   backdropClassName?: string;
   position?: Position;
   transition?: Transition;
   disableBackdrop?: boolean;
   speed?: Speed;
-  hotKey?: string;
 }>;
 
 const positionClasses: Record<Position, string[]> = {
@@ -64,34 +68,19 @@ const Drawer: FC<DrawerProps> = (props) => {
   const {
     isOpen = false,
     onClose,
-    onOpen,
     children,
     className,
+    disableFocusTrap,
     backdropClassName,
     position = 'left',
     transition = 'slide',
     speed = 'medium',
     disableBackdrop,
-    hotKey,
   } = props;
 
   const handleOnClose = useCallback(() => {
     onClose && onClose();
   }, [onClose]);
-
-  const handleKeyDown: React.KeyboardEventHandler = useCallback(
-    (event) => {
-      const key = event.key.toUpperCase();
-      if (hotKey && hotKey.toUpperCase() === key) {
-        if (isOpen) {
-          onClose && onClose();
-        } else {
-          onOpen && onOpen();
-        }
-      }
-    },
-    [hotKey, isOpen, onClose, onOpen]
-  );
 
   // useHotkeys([
   //   {
@@ -117,14 +106,14 @@ const Drawer: FC<DrawerProps> = (props) => {
     ...positionClasses[position],
     ...getTransitionClasses(),
     speedClasses[speed],
-    className
+    className,
   );
 
   const backdropClasses = classNames(
     'fixed inset-0 transition-opacity',
     speedClasses[speed],
     backdropClassName,
-    isOpen ? 'pointer-events-auto' : '!pointer-events-none !opacity-0'
+    isOpen ? 'pointer-events-auto' : '!pointer-events-none !opacity-0',
   );
 
   return (
@@ -136,12 +125,19 @@ const Drawer: FC<DrawerProps> = (props) => {
             onClick={() => handleOnClose()}
             role="button"
             aria-label="Close"
-            tabIndex={0}
+            tabIndex={-1}
           />
         )}
-        <div className={drawerClasses} onKeyDown={handleKeyDown}>
-          {children}
-        </div>
+        <div className={drawerClasses}>{children}</div>
+        {/* {disableFocusTrap ? (
+          <Content />
+        ) : (
+          <FocusTrap active={isOpen}>
+            <div>
+              <Content />
+            </div>
+          </FocusTrap>
+        )} */}
       </ReactPortal>
     </>
   );

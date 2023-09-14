@@ -3,10 +3,10 @@ import React, {
   ReactNode,
   forwardRef,
   useImperativeHandle,
+  useEffect,
 } from 'react';
-import { useEffect } from 'react';
 import { FieldError, useFormContext } from 'react-hook-form';
-import { useMicroStore } from '../hooks/useMicroStore';
+import { useMicroStore } from '../../hooks/useMicroStore';
 
 export type FileInputState = {
   hasFocus: boolean;
@@ -72,7 +72,7 @@ const BaseInputFile = forwardRef<
     name,
     ...props
   },
-  ref
+  ref,
 ) {
   const {
     register,

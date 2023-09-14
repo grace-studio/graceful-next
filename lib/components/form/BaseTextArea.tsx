@@ -3,10 +3,11 @@ import React, {
   ReactNode,
   forwardRef,
   useImperativeHandle,
+  FocusEvent,
+  useEffect,
 } from 'react';
-import { FocusEvent, useEffect } from 'react';
 import { FieldError, useFormContext } from 'react-hook-form';
-import { useMicroStore } from '../hooks/useMicroStore';
+import { useMicroStore } from '../../hooks/useMicroStore';
 
 export type TextAreaState = {
   hasFocus: boolean;
@@ -61,7 +62,7 @@ const BaseTextArea = forwardRef<
     name,
     ...props
   },
-  ref
+  ref,
 ) {
   const {
     register,
