@@ -79,9 +79,9 @@ const BaseRadioButton = forwardRef<
   useEffect(() => {
     const newState = {
       ...state,
+      value,
       checked: String(currentValue) === String(value),
     };
-    onStateChange && onStateChange(newState);
     dispatch(newState);
   }, [currentValue]);
 

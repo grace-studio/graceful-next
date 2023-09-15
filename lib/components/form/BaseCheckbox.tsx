@@ -76,7 +76,6 @@ const BaseCheckbox = forwardRef<
       ...state,
       checked: currentValue,
     };
-    onStateChange && onStateChange(newState);
     dispatch(newState);
   }, [currentValue]);
 

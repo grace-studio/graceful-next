@@ -121,7 +121,11 @@ export default function Home() {
 
       <div className="mt-20">
         <BaseButton onClick={() => setShow(false)}>Remove</BaseButton>
-        <Form onSubmit={console.log} onValuesChange={console.log}>
+        <Form
+          onSubmit={console.log}
+          onValuesChange={console.log}
+          defaultValues={{ radio: 'val2' }}
+        >
           <div className="mt-10 grid gap-10 grid-cols-2">
             <FocusTrap combined active={activeTrap === 1}>
               <div
@@ -134,6 +138,18 @@ export default function Home() {
                   label="label"
                   name="text"
                   placeholder="Text input"
+                />
+                <BaseRadioButton
+                  onStateChange={console.log}
+                  name="radio"
+                  value="val1"
+                  label="radio label 1"
+                />
+                <BaseRadioButton
+                  onStateChange={console.log}
+                  name="radio"
+                  value="val2"
+                  label="radio label 2"
                 />
                 <BaseInputField
                   integer
