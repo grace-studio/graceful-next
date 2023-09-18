@@ -182,6 +182,7 @@ export default function Home() {
                   }`}
                 >
                   <BaseInputField
+                    disabled
                     integer
                     label="int with max"
                     name="integerMax"
@@ -196,6 +197,7 @@ export default function Home() {
                     // inputMode="decimal"
                   />
                   <BaseInputField
+                    disabled
                     label="float with min"
                     name="integerMin"
                     placeholder="Number input test - float"
@@ -215,7 +217,9 @@ export default function Home() {
 
           <FocusTrap mode="combined" active>
             <div className="mt-10 p-4 grid grid-cols-2 gap-10 border-4 border-red-400">
-              <BaseButton submit>Submit</BaseButton>
+              <BaseButton disabled submit>
+                Submit
+              </BaseButton>
             </div>
           </FocusTrap>
         </Form>

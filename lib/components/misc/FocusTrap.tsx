@@ -41,6 +41,17 @@ const validateRefs = () => {
 const filterNoInitFocus = (elementRef: FocusableElement) =>
   !elementRef.hasAttribute('data-no-init');
 
+const addFallbackChild = (elementRef: HTMLElement | null) => {
+  if (!elementRef) {
+    return;
+  }
+
+  const fallbackChild = document.createElement('div');
+  fallbackChild.setAttribute('tabindex', '-1');
+  fallbackChild.style.display = 'none';
+  elementRef.appendChild(fallbackChild);
+};
+
 const registerRef = (elementRef: HTMLElement | null) => {
   if (!elementRef) {
     return;
@@ -121,6 +132,10 @@ const setNoInitOnChildren = (
 const FocusTrap = ({ children, active, mode, ...props }: FocusTrapProps) => {
   const elementRef = useRef<HTMLElement>(null);
   const [trap, setTrap] = useState<focusTrap.FocusTrap>();
+
+  useEffect(() => {
+    addFallbackChild(elementRef.current);
+  }, []);
 
   // Solo mode, only one focus trap active
   if (mode === 'solo') {
