@@ -1,12 +1,20 @@
 import { ReactElement, cloneElement, useEffect, useRef, useState } from 'react';
 import * as focusTrap from 'focus-trap';
-import { tabbable } from 'tabbable';
+import { tabbable, FocusableElement } from 'tabbable';
+
+type FocusTrapCombined = {
+  mode: 'combined';
+  noInitialFocus?: boolean;
+};
+
+type FocusTrapSolo = {
+  mode: 'solo';
+};
 
 type FocusTrapProps = {
   children: ReactElement;
   active?: boolean;
-  combined?: boolean;
-};
+} & (FocusTrapSolo | FocusTrapCombined);
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -21,7 +29,7 @@ const options: focusTrap.Options = {
   escapeDeactivates: false,
 };
 
-const sortNodes = (a: any, b: any) =>
+const sortNodes = (a: FocusableElement, b: FocusableElement) =>
   a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
 
 const validateRefs = () => {
@@ -30,7 +38,10 @@ const validateRefs = () => {
   ).filter((ref) => ref.checkVisibility());
 };
 
-const registerRef = (elementRef: any) => {
+const filterNoInitFocus = (elementRef: FocusableElement) =>
+  !elementRef.hasAttribute('data-no-init');
+
+const registerRef = (elementRef: HTMLElement | null) => {
   if (!elementRef) {
     return;
   }
@@ -45,7 +56,7 @@ const registerRef = (elementRef: any) => {
   validateRefs();
 };
 
-const unRegisterRef = (elementRef: any) => {
+const unRegisterRef = (elementRef: HTMLElement | null) => {
   if (!elementRef) {
     return;
   }
@@ -59,12 +70,15 @@ const unRegisterRef = (elementRef: any) => {
 
 const focusFirstElement = () => {
   const elementRefs = window.__gracefulTrapElementRefs || [];
-  const tabs = elementRefs.flatMap((ref) => tabbable(ref)).sort(sortNodes);
+  const tabs = elementRefs
+    .flatMap((ref) => tabbable(ref))
+    .sort(sortNodes)
+    .filter(filterNoInitFocus);
 
   if (tabs[0]) {
     setTimeout(() => {
       tabs[0].focus();
-    }, 100);
+    }, 10);
   }
 };
 
@@ -86,11 +100,30 @@ const updateTrap = () => {
   focusFirstElement();
 };
 
-const FocusTrap = ({ children, active, combined }: FocusTrapProps) => {
+const setNoInitOnChildren = (
+  elementRef: HTMLElement | null,
+  noInitialFocus: boolean,
+) => {
+  if (!elementRef) {
+    return;
+  }
+
+  const children = tabbable(elementRef);
+  children.forEach((child) => {
+    if (noInitialFocus) {
+      child.setAttribute('data-no-init', 'on');
+    } else {
+      child.removeAttribute('data-no-init');
+    }
+  });
+};
+
+const FocusTrap = ({ children, active, mode, ...props }: FocusTrapProps) => {
   const elementRef = useRef<HTMLElement>(null);
   const [trap, setTrap] = useState<focusTrap.FocusTrap>();
 
-  if (!combined) {
+  // Solo mode, only one focus trap active
+  if (mode === 'solo') {
     useEffect(() => {
       if (elementRef.current) {
         setTrap(focusTrap.createFocusTrap(elementRef.current, options));
@@ -106,7 +139,9 @@ const FocusTrap = ({ children, active, combined }: FocusTrapProps) => {
         }
       }
     }, [active]);
-  } else {
+
+    // Combined mode, multiple focus trap areas to act as one
+  } else if (mode === 'combined') {
     useEffect(() => {
       if (active) {
         registerRef(elementRef.current);
@@ -115,6 +150,11 @@ const FocusTrap = ({ children, active, combined }: FocusTrapProps) => {
       }
       updateTrap();
     }, [active]);
+
+    useEffect(() => {
+      const noInit = (props as FocusTrapCombined).noInitialFocus;
+      setNoInitOnChildren(elementRef.current, !!noInit);
+    }, [props]);
 
     useEffect(() => {
       return () => {

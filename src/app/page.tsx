@@ -51,7 +51,7 @@ export default function Home() {
         transition="fade"
         position="center"
       >
-        <FocusTrap active={isDrawerOpen}>
+        <FocusTrap mode="solo" active={isDrawerOpen}>
           <div className="bg-white p-10">
             <div className="flex justify-end">
               <BaseButton onClick={() => setIsDrawerOpen(false)}>X</BaseButton>
@@ -121,15 +121,20 @@ export default function Home() {
 
       <div className="mt-20">
         <BaseButton onClick={() => setShow(false)}>Remove</BaseButton>
-        <Form
-          onSubmit={console.log}
-          onValuesChange={console.log}
-          defaultValues={{ radio: 'val2' }}
-        >
+
+        <FocusTrap mode="combined" noInitialFocus active>
+          <div className="mt-10 p-4 grid grid-cols-2 gap-10 border-4 border-red-400">
+            <BaseButton onClick={() => setActiveTrap(activeTrap === 1 ? 2 : 1)}>
+              Toggle trap
+            </BaseButton>
+          </div>
+        </FocusTrap>
+
+        <Form onSubmit={console.log} defaultValues={{ radio: 'val2' }}>
           <div className="mt-10 grid gap-10 grid-cols-2">
-            <FocusTrap combined active={activeTrap === 1}>
+            <FocusTrap mode="combined" active={activeTrap === 1}>
               <div
-                className={`grid grid-cols-1 gap-10 border-4 p-4 ${
+                className={`grid grid-cols-1 gap-10 h-min border-4 p-4 ${
                   activeTrap === 1 ? 'border-red-400' : 'border-gray-300'
                 }`}
               >
@@ -140,13 +145,11 @@ export default function Home() {
                   placeholder="Text input"
                 />
                 <BaseRadioButton
-                  onStateChange={console.log}
                   name="radio"
                   value="val1"
                   label="radio label 1"
                 />
                 <BaseRadioButton
-                  onStateChange={console.log}
                   name="radio"
                   value="val2"
                   label="radio label 2"
@@ -165,42 +168,47 @@ export default function Home() {
               </div>
             </FocusTrap>
             {show && (
-              <FocusTrap combined active={activeTrap === 2}>
+              <FocusTrap mode="combined" active={activeTrap === 2}>
                 <div
-                  className={`grid grid-cols-1 gap-10 border-4 p-4 ${
+                  className={`grid grid-cols-1 gap-10 h-min border-4 p-4 ${
                     activeTrap === 2 ? 'border-red-400' : 'border-gray-300'
                   }`}
                 >
                   <BaseInputField
-                    type="text"
-                    label="label"
-                    name="text2"
-                    placeholder="Text input"
-                  />
-                  <BaseInputField
                     integer
-                    label="label"
-                    name="integer2"
+                    label="int with max"
+                    name="integerMax"
                     placeholder="Number input test - integer"
                     type="number"
                     // decimalPoint="."
                     // min={20}
-                    // max={300}
+                    max={-300}
+                    onMaxValue={() => {
+                      console.log('above max');
+                    }}
                     // inputMode="decimal"
+                  />
+                  <BaseInputField
+                    label="float with min"
+                    name="integerMin"
+                    placeholder="Number input test - float"
+                    type="number"
+                    decimalPoint="."
+                    min={200}
+                    onMinValue={() => {
+                      console.log('below min');
+                    }}
+                    // max={300}
+                    inputMode="decimal"
                   />
                 </div>
               </FocusTrap>
             )}
           </div>
 
-          <FocusTrap combined active>
+          <FocusTrap mode="combined" active>
             <div className="mt-10 p-4 grid grid-cols-2 gap-10 border-4 border-red-400">
               <BaseButton submit>Submit</BaseButton>
-              <BaseButton
-                onClick={() => setActiveTrap(activeTrap === 1 ? 2 : 1)}
-              >
-                Toggle trap
-              </BaseButton>
             </div>
           </FocusTrap>
         </Form>

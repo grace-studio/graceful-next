@@ -33,6 +33,8 @@ type BaseInputFieldNumber = {
   max?: number;
   min?: number;
   integer?: boolean;
+  onMaxValue?: () => void;
+  onMinValue?: () => void;
 };
 
 type InputMode =
@@ -109,15 +111,20 @@ const BaseInputField = forwardRef<
     }
   }
 
+  // Set variables for number props, and delete from 'props'
   const decimalPoint = props.type === 'number' ? props.decimalPoint : '.';
   const integer = props.type === 'number' ? props.integer : false;
   const max = props.type === 'number' ? props.max : undefined;
   const min = props.type === 'number' ? props.min : undefined;
+  const onMaxValue = props.type === 'number' ? props.onMaxValue : undefined;
+  const onMinValue = props.type === 'number' ? props.onMinValue : undefined;
   if (props.type === 'number') {
     delete props.decimalPoint;
     delete props.integer;
     delete props.max;
     delete props.min;
+    delete props.onMaxValue;
+    delete props.onMinValue;
   }
 
   useImperativeHandle(ref, () => ({
@@ -181,9 +188,20 @@ const BaseInputField = forwardRef<
       returnValue = Math.round(Number(returnValue)).toString();
     }
 
-    // Handle number max value
-    if (max && Number(returnValue) > max) {
+    // Handle number max value, max > 0
+    if (max && max > 0 && Number(returnValue) > max) {
       returnValue = max.toString();
+      onMaxValue && onMaxValue();
+    }
+
+    // Handle number min value, when character length is equal or greater
+    if (
+      min &&
+      String(min).length <= returnValue.length &&
+      Number(returnValue) < min
+    ) {
+      returnValue = min.toString();
+      onMinValue && onMinValue();
     }
 
     // Replace decimal point with preferred one
@@ -195,8 +213,16 @@ const BaseInputField = forwardRef<
   const handleOnBlur = (event: FocusEvent<HTMLInputElement>) => {
     const elem = event.target as any;
 
+    // Handle min value
     if (min && Number(elem.value) < min) {
       elem.value = min.toString();
+      onMinValue && onMinValue();
+    }
+
+    // Handle max value, max < 0
+    if (max && max <= 0 && Number(elem.value) >= max) {
+      elem.value = max.toString();
+      onMaxValue && onMaxValue();
     }
 
     handleOnFocus(event);
