@@ -124,20 +124,20 @@ export default function Home() {
       <div className="mt-20">
         <BaseButton onClick={() => setShow(false)}>Remove</BaseButton>
 
-        <FocusTrap mode="combined" noInitialFocus active>
-          <div className="mt-10 p-4 grid grid-cols-2 gap-10 border-4 border-red-400">
-            <BaseButton
-              hotKey="a+s+d"
-              onClick={() => setActiveTrap(activeTrap === 1 ? 2 : 1)}
-            >
-              Toggle trap
-            </BaseButton>
-          </div>
-        </FocusTrap>
+        {/* <FocusTrap mode="combined" noInitialFocus active> */}
+        <div className="mt-10 p-4 grid grid-cols-2 gap-10 border-4 border-red-400">
+          <BaseButton
+            hotKey="a+s+d"
+            onClick={() => setActiveTrap(activeTrap === 1 ? 2 : 1)}
+          >
+            Toggle trap
+          </BaseButton>
+        </div>
+        {/* </FocusTrap> */}
 
         <Form onSubmit={console.log} defaultValues={{ radio: 'val2' }}>
           <div className="mt-10 grid gap-10 grid-cols-2">
-            <FocusTrap mode="combined" active={activeTrap === 1}>
+            {/* <FocusTrap mode="combined" active={activeTrap === 1}>
               <div
                 className={`grid grid-cols-1 gap-10 h-min border-4 p-4 ${
                   activeTrap === 1 ? 'border-red-400' : 'border-gray-300'
@@ -173,7 +173,7 @@ export default function Home() {
                   // inputMode="decimal"
                 />
               </div>
-            </FocusTrap>
+            </FocusTrap> */}
             {show && (
               <FocusTrap mode="combined" active={activeTrap === 2}>
                 <div
@@ -182,7 +182,6 @@ export default function Home() {
                   }`}
                 >
                   <BaseInputField
-                    disabled
                     integer
                     label="int with max"
                     name="integerMax"

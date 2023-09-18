@@ -102,7 +102,9 @@ const updateTrap = () => {
     window.__gracefulTrap = focusTrap.createFocusTrap(elementRefs, options);
   }
 
-  if (elementRefs.length > 0) {
+  const tabbableElements = elementRefs.flatMap((ref) => tabbable(ref));
+
+  if (elementRefs.length > 0 && tabbableElements.length > 0) {
     window.__gracefulTrap.activate();
   } else {
     window.__gracefulTrap.deactivate();
