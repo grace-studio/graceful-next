@@ -126,7 +126,10 @@ export default function Home() {
 
         <FocusTrap mode="combined" noInitialFocus active>
           <div className="mt-10 p-4 grid grid-cols-2 gap-10 border-4 border-red-400">
-            <BaseButton onClick={() => setActiveTrap(activeTrap === 1 ? 2 : 1)}>
+            <BaseButton
+              hotKey="a+s+d"
+              onClick={() => setActiveTrap(activeTrap === 1 ? 2 : 1)}
+            >
               Toggle trap
             </BaseButton>
           </div>

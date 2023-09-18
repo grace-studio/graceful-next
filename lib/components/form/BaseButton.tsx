@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import React, { FC, PropsWithChildren } from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 export type BaseButtonProps = PropsWithChildren<{
   ariaLabel?: string;
@@ -8,6 +9,7 @@ export type BaseButtonProps = PropsWithChildren<{
   onClick?: () => void;
   target?: '_self' | '_blank';
   href?: string;
+  hotKey?: string;
   submit?: boolean;
   id?: string;
 }>;
@@ -25,7 +27,16 @@ const BaseButton: FC<BaseButtonProps> = (props) => {
     target,
     href,
     submit,
+    hotKey = '',
   } = props;
+
+  useHotkeys(
+    hotKey,
+    () => {
+      onClick && onClick();
+    },
+    { enabled: !!hotKey },
+  );
 
   const buttonProps = {
     'aria-label': ariaLabel,
