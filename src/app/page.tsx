@@ -13,6 +13,7 @@ import {
   Form,
   FocusTrap,
 } from '@grace-studio/graceful-next/components';
+import { useSetClassOnTab } from '@grace-studio/graceful-next/hooks';
 import { useState } from 'react';
 
 const selectOptions = [
@@ -38,6 +39,7 @@ export default function Home() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [activeTrap, setActiveTrap] = useState(1);
   const [show, setShow] = useState(true);
+  useSetClassOnTab('tabbing', 'body');
 
   return (
     <BaseContentWrapper className="mt-20">
@@ -145,11 +147,13 @@ export default function Home() {
                   placeholder="Text input"
                 />
                 <BaseRadioButton
+                  wrapperClassName="grid grid-cols-[1fr_auto] items-center focus-active"
                   name="radio"
                   value="val1"
                   label="radio label 1"
                 />
                 <BaseRadioButton
+                  wrapperClassName="grid grid-cols-[1fr_auto] items-center focus-active"
                   name="radio"
                   value="val2"
                   label="radio label 2"

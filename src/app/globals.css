@@ -18,3 +18,9 @@ body {
     rgb(var(--background-start-rgb));
   min-height: 100dvh;
 }
+
+@layer base {
+  .tabbing .focus-active {
+    @apply outline outline-4 outline-offset-2 outline-transparent focus-within:outline-fuchsia-600;
+  }
+}

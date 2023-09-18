@@ -1,7 +1,7 @@
 import { MutableRefObject, useEffect, useRef } from 'react';
 
 export const useOutsideClick = <T extends Element>(
-  callback: () => void
+  callback: () => void,
 ): MutableRefObject<T | null> => {
   const ref = useRef<T>(null);
 

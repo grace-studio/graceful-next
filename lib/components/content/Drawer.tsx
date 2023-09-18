@@ -1,13 +1,8 @@
 import classNames from 'classnames';
-import { FocusTrap, ReactPortal } from '..';
-import React, {
-  FC,
-  PropsWithChildren,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { ReactPortal } from '..';
+import React, { FC, PropsWithChildren, useCallback } from 'react';
 import { usePreventBodyScroll } from '../../hooks';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 type Position = 'left' | 'right' | 'top' | 'bottom' | 'center';
 type Transition = 'fade' | 'slide';
@@ -70,7 +65,6 @@ const Drawer: FC<DrawerProps> = (props) => {
     onClose,
     children,
     className,
-    disableFocusTrap,
     backdropClassName,
     position = 'left',
     transition = 'slide',
@@ -81,14 +75,7 @@ const Drawer: FC<DrawerProps> = (props) => {
   const handleOnClose = useCallback(() => {
     onClose && onClose();
   }, [onClose]);
-
-  // useHotkeys([
-  //   {
-  //     name: 'drawer',
-  //     keys: 'esc',
-  //     callback: handleKeyDown,
-  //   },
-  // ]);
+  useHotkeys('esc', handleOnClose, { enabled: isOpen });
   usePreventBodyScroll(isOpen);
 
   const getTransitionClasses = () => {
@@ -129,15 +116,6 @@ const Drawer: FC<DrawerProps> = (props) => {
           />
         )}
         <div className={drawerClasses}>{children}</div>
-        {/* {disableFocusTrap ? (
-          <Content />
-        ) : (
-          <FocusTrap active={isOpen}>
-            <div>
-              <Content />
-            </div>
-          </FocusTrap>
-        )} */}
       </ReactPortal>
     </>
   );
