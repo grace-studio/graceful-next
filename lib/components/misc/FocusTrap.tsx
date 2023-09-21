@@ -1,7 +1,7 @@
 import { ReactElement, cloneElement, useEffect, useRef, useState } from 'react';
 import * as focusTrap from 'focus-trap';
 import { tabbable, FocusableElement } from 'tabbable';
-import { isElementVisible } from '@grace-studio/graceful-next/utils';
+import { isElementVisible } from '../../utils';
 
 type FocusTrapCombined = {
   mode: 'combined';
