@@ -1,5 +1,6 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
+  transformIgnorePatterns: ['/node_modules/nanoid/'],
   preset: 'ts-jest',
   transform: {
     '^.+\\.tsx?$': [
