@@ -1,6 +1,7 @@
 import { ReactElement, cloneElement, useEffect, useRef, useState } from 'react';
 import * as focusTrap from 'focus-trap';
 import { tabbable, FocusableElement } from 'tabbable';
+import { isElementVisible } from '@grace-studio/graceful-next/utils';
 
 type FocusTrapCombined = {
   mode: 'combined';
@@ -32,12 +33,6 @@ const options: focusTrap.Options = {
 const sortNodes = (a: FocusableElement, b: FocusableElement) =>
   a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
 
-const validateRefs = () => {
-  window.__gracefulTrapElementRefs = (
-    window.__gracefulTrapElementRefs || []
-  ).filter((ref) => ref.checkVisibility());
-};
-
 const filterNoInitFocus = (elementRef: FocusableElement) =>
   !elementRef.hasAttribute('data-no-init');
 
@@ -61,10 +56,10 @@ const registerRef = (elementRef: HTMLElement | null) => {
     window.__gracefulTrapElementRefs = [
       ...(window.__gracefulTrapElementRefs || []),
       elementRef,
-    ].sort(sortNodes);
+    ]
+      .filter(isElementVisible)
+      .sort(sortNodes);
   }
-
-  validateRefs();
 };
 
 const unRegisterRef = (elementRef: HTMLElement | null) => {
@@ -74,17 +69,16 @@ const unRegisterRef = (elementRef: HTMLElement | null) => {
 
   window.__gracefulTrapElementRefs = (window.__gracefulTrapElementRefs || [])
     .filter((ref) => ref !== elementRef)
+    .filter(isElementVisible)
     .sort(sortNodes);
-
-  validateRefs();
 };
 
 const focusFirstElement = () => {
   const elementRefs = window.__gracefulTrapElementRefs || [];
   const tabs = elementRefs
     .flatMap((ref) => tabbable(ref))
-    .sort(sortNodes)
-    .filter(filterNoInitFocus);
+    .filter(filterNoInitFocus)
+    .sort(sortNodes);
 
   if (tabs[0]) {
     setTimeout(() => {
