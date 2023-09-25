@@ -101,7 +101,10 @@ const BaseAccordion = ({
       <button
         className={titleClasses}
         aria-expanded={state.isOpen}
-        onClick={handleOnClick}
+        onClick={(e) => {
+          e.preventDefault();
+          handleOnClick();
+        }}
       >
         {title}
       </button>
