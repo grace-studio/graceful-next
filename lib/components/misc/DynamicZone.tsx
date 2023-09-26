@@ -1,3 +1,4 @@
+'use client';
 import { NextArray } from '../../types';
 import { FC } from 'react';
 import React from 'react';

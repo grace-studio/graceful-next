@@ -1,3 +1,4 @@
+'use client';
 import Link from 'next/link';
 import React, { FC, PropsWithChildren } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';

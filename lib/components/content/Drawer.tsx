@@ -1,3 +1,4 @@
+'use client';
 import classNames from 'classnames';
 import { ReactPortal } from '..';
 import React, { FC, PropsWithChildren, useCallback } from 'react';
