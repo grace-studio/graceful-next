@@ -7,7 +7,7 @@ import React, {
   FocusEvent,
   useEffect,
 } from 'react';
-import { FieldError, useFormContext, useWatch } from 'react-hook-form';
+import { FieldError, useFormContext } from 'react-hook-form';
 import { useMicroStore } from '../../hooks/useMicroStore';
 
 export type RadioButtonState = {
@@ -68,23 +68,24 @@ const BaseRadioButton = forwardRef<
     register,
     setValue,
     formState: { errors, isSubmitting },
+    watch,
   } = useFormContext();
   const [state, dispatch] = useMicroStore(initialState);
 
   useImperativeHandle(ref, () => ({
     setValue: (value: string) => setValue(name, value),
   }));
-
-  const currentValue = useWatch({ name });
+  const currentValue = watch();
 
   useEffect(() => {
     const newState = {
       ...state,
       value,
-      checked: String(currentValue) === String(value),
+      checked: String(currentValue[name]) === String(value),
     };
     dispatch(newState);
-  }, [currentValue]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentValue, value]);
 
   useEffect(() => {
     isSubmitting && dispatch({ isTouched: true });

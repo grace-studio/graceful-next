@@ -6,7 +6,7 @@ import React, {
   FocusEvent,
   useEffect,
 } from 'react';
-import { FieldError, useFormContext, useWatch } from 'react-hook-form';
+import { FieldError, useFormContext } from 'react-hook-form';
 import { useMicroStore } from '../../hooks/useMicroStore';
 
 export type CheckboxState = {
@@ -63,6 +63,7 @@ const BaseCheckbox = forwardRef<
     register,
     setValue,
     formState: { errors, isSubmitting },
+    watch,
   } = useFormContext();
   const [state, dispatch] = useMicroStore(initialState);
 
@@ -70,14 +71,15 @@ const BaseCheckbox = forwardRef<
     setChecked: (checked: boolean) => setValue(name, checked),
   }));
 
-  const currentValue = useWatch({ name });
+  const currentValue = watch();
 
   useEffect(() => {
     const newState = {
       ...state,
-      checked: currentValue,
+      checked: currentValue[name],
     };
     dispatch(newState);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentValue]);
 
   useEffect(() => {

@@ -35,7 +35,7 @@ const selectOptions = [
   },
 ];
 
-export default function Home() {
+const Home = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [activeTrap, setActiveTrap] = useState(1);
   const [show, setShow] = useState(true);
@@ -45,7 +45,7 @@ export default function Home() {
     <BaseContentWrapper className="mt-20">
       <BaseButton onClick={() => setIsDrawerOpen(true)}>Open drawer</BaseButton>
 
-      <Drawer
+      {/* <Drawer
         disableFocusTrap
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
@@ -61,7 +61,6 @@ export default function Home() {
             <Form
               defaultValues={{ check: true }}
               onSubmit={console.log}
-              onValuesChange={console.log}
             >
               <div className="grid grid-cols-1 gap-10">
                 <BaseInputField
@@ -70,7 +69,7 @@ export default function Home() {
                   name="text"
                   placeholder="Text input"
                 />
-                {/* <BaseInputField
+                <BaseInputField
                 integer
                 label="label"
                 name="integer"
@@ -93,7 +92,7 @@ export default function Home() {
                 name="select"
                 onStateChange={console.log}
                 options={selectOptions}
-              /> */}
+              />
                 <BaseRadioButton
                   name="radio"
                   value="val1"
@@ -107,19 +106,19 @@ export default function Home() {
 
                 <BaseCheckbox name="check" label="checkbox" />
 
-                {/* <BaseAccordion initiallyOpen>
+                <BaseAccordion initiallyOpen>
                 <BaseAccordion.Title>
                 <div>title</div>
                 </BaseAccordion.Title>
                 <BaseAccordion.Content>child</BaseAccordion.Content>
-              </BaseAccordion> */}
+              </BaseAccordion>
 
                 <BaseButton submit>Submit</BaseButton>
               </div>
             </Form>
           </div>
         </FocusTrap>
-      </Drawer>
+      </Drawer> */}
 
       <div className="mt-20">
         <BaseButton onClick={() => setShow(false)}>Remove</BaseButton>
@@ -135,9 +134,13 @@ export default function Home() {
         </div>
         {/* </FocusTrap> */}
 
-        <Form onSubmit={console.log} defaultValues={{ radio: 'val2' }}>
+        <Form
+          onSubmit={console.log}
+          onValuesChange={console.log}
+          defaultValues={{ radio: 'val2' }}
+        >
           <div className="mt-10 grid gap-10 grid-cols-2">
-            {/* <FocusTrap mode="combined" active={activeTrap === 1}>
+            <FocusTrap mode="combined" active={activeTrap === 1}>
               <div
                 className={`grid grid-cols-1 gap-10 h-min border-4 p-4 ${
                   activeTrap === 1 ? 'border-red-400' : 'border-gray-300'
@@ -173,7 +176,7 @@ export default function Home() {
                   // inputMode="decimal"
                 />
               </div>
-            </FocusTrap> */}
+            </FocusTrap>
             {show && (
               <FocusTrap mode="combined" active={activeTrap === 2}>
                 <div
@@ -225,4 +228,6 @@ export default function Home() {
       </div>
     </BaseContentWrapper>
   );
-}
+};
+
+export default Home;

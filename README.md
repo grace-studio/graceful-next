@@ -27,7 +27,7 @@ Add CSS scanning for Tailwind config file - `tailwind.config.js`
 module.exports = {
   content: [
     './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@grace-studio/graceful-next/src/**/*.tsx',
+    './node_modules/@grace-studio/graceful-next/lib/**/*.tsx',
   ],
   ...
 };

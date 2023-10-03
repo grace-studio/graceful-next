@@ -38,7 +38,7 @@ const Form = forwardRef<FormRef, FormProps>(function Form(
     className,
     formProps = {},
   },
-  ref
+  ref,
 ) {
   const methods = useForm({
     ...(validationSchema && { resolver: yupResolver(validationSchema) }),

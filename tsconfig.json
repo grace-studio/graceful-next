@@ -1,29 +1,22 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
+    "allowJs": false,
+    "allowUnreachableCode": false,
+    "declaration": false,
     "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["esnext", "dom"],
     "module": "esnext",
     "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "paths": {
-      "@/*": ["./src/*"],
-      "@grace-studio/graceful-next/*": ["./lib/*"]
-    }
+    "outDir": "lib/esm",
+    "removeComments": true,
+    "rootDir": "src",
+    "jsx": "react",
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "es6",
+    "noEmit": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["lib/**/*.ts", "lib/**/*.tsx"],
   "exclude": ["node_modules"]
 }
