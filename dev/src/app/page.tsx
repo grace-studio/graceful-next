@@ -71,6 +71,9 @@ const Home = () => {
                   label="label"
                   name="text"
                   placeholder="Text input"
+                  onEnter={() => {
+                    console.log('hej');
+                  }}
                 />
                 {/* <BaseInputField
                   integer

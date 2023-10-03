@@ -57,6 +57,7 @@ export type BaseInputFieldProps = {
   disabled?: boolean;
   maxLength?: number;
   onStateChange?: (state: InputState) => void;
+  onEnter?: () => void;
   inputMode?: InputMode;
   pattern?: string;
 } & (BaseInputFieldAny | BaseInputFieldNumber);
@@ -86,6 +87,7 @@ const BaseInputField = forwardRef<
     labelClassName = 'block',
     errorClassName = 'text-red-500',
     onStateChange,
+    onEnter,
     name,
     inputMode: _inputMode,
     ...props
@@ -249,6 +251,7 @@ const BaseInputField = forwardRef<
     }
 
     if (event.key === 'Enter') {
+      onEnter && onEnter();
       event.preventDefault();
       return;
     }
