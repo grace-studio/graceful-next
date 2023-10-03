@@ -10,7 +10,7 @@
     "moduleResolution": "node",
     "outDir": "lib/esm",
     "removeComments": true,
-    "rootDir": "src",
+    "rootDir": "lib",
     "jsx": "react",
     "skipLibCheck": true,
     "strict": true,

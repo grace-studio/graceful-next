@@ -45,7 +45,7 @@ const Home = () => {
     <BaseContentWrapper className="mt-20">
       <BaseButton onClick={() => setIsDrawerOpen(true)}>Open drawer</BaseButton>
 
-      {/* <Drawer
+      <Drawer
         disableFocusTrap
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
@@ -60,7 +60,10 @@ const Home = () => {
             </div>
             <Form
               defaultValues={{ check: true }}
-              onSubmit={console.log}
+              onSubmit={(val) => {
+                console.log('sub');
+                console.log(val);
+              }}
             >
               <div className="grid grid-cols-1 gap-10">
                 <BaseInputField
@@ -69,30 +72,30 @@ const Home = () => {
                   name="text"
                   placeholder="Text input"
                 />
-                <BaseInputField
-                integer
-                label="label"
-                name="integer"
-                placeholder="Number input test - integer"
-                type="number"
-                // decimalPoint="."
-                // min={20}
-                // max={300}
-                // inputMode="decimal"
-              />
+                {/* <BaseInputField
+                  integer
+                  label="label"
+                  name="integer"
+                  placeholder="Number input test - integer"
+                  type="number"
+                  // decimalPoint="."
+                  // min={20}
+                  // max={300}
+                  // inputMode="decimal"
+                />
 
-              <BaseInputFile
-                multiple
-                label="Filesss"
-                name="file"
-                onFilesChange={console.log}
-              />
-              <BaseSelect
-                label="Select"
-                name="select"
-                onStateChange={console.log}
-                options={selectOptions}
-              />
+                <BaseInputFile
+                  multiple
+                  label="Filesss"
+                  name="file"
+                  onFilesChange={console.log}
+                />
+                <BaseSelect
+                  label="Select"
+                  name="select"
+                  onStateChange={console.log}
+                  options={selectOptions}
+                /> */}
                 <BaseRadioButton
                   name="radio"
                   value="val1"
@@ -106,19 +109,19 @@ const Home = () => {
 
                 <BaseCheckbox name="check" label="checkbox" />
 
-                <BaseAccordion initiallyOpen>
-                <BaseAccordion.Title>
-                <div>title</div>
-                </BaseAccordion.Title>
-                <BaseAccordion.Content>child</BaseAccordion.Content>
-              </BaseAccordion>
+                {/* <BaseAccordion initiallyOpen>
+                  <BaseAccordion.Title>
+                    <div>title</div>
+                  </BaseAccordion.Title>
+                  <BaseAccordion.Content>child</BaseAccordion.Content>
+                </BaseAccordion> */}
 
                 <BaseButton submit>Submit</BaseButton>
               </div>
             </Form>
           </div>
         </FocusTrap>
-      </Drawer> */}
+      </Drawer>
 
       <div className="mt-20">
         <BaseButton onClick={() => setShow(false)}>Remove</BaseButton>

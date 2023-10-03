@@ -111,6 +111,13 @@ const BaseRadioButton = forwardRef<
     dispatch({ value: event.target.value });
   };
 
+  const handleOnKeyDown = (event: any) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      return;
+    }
+  };
+
   return (
     <>
       <div className="relative">
@@ -125,6 +132,7 @@ const BaseRadioButton = forwardRef<
             onFocus={handleOnFocus}
             onBlur={handleOnFocus}
             onChange={handleOnChange}
+            onKeyDown={handleOnKeyDown}
             id={`${name}-${value}`}
             className={className}
             value={value}

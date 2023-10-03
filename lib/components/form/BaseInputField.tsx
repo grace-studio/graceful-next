@@ -248,6 +248,11 @@ const BaseInputField = forwardRef<
       return;
     }
 
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      return;
+    }
+
     if (props.type === 'number') {
       let isAllowed = [
         '0',
@@ -269,7 +274,6 @@ const BaseInputField = forwardRef<
         'ArrowRight',
         'Backspace',
         'Tab',
-        'Enter',
       ].includes(event.key);
 
       if (elem.value.length > 0 && event.key === '-') {

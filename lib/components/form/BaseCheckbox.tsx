@@ -106,6 +106,14 @@ const BaseCheckbox = forwardRef<
     dispatch({ checked: !state.checked });
   };
 
+  const handleOnKeyDown = (event: any) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleOnClick();
+      return;
+    }
+  };
+
   return (
     <>
       <div className="relative">
@@ -120,6 +128,7 @@ const BaseCheckbox = forwardRef<
             onFocus={handleOnFocus}
             onBlur={handleOnFocus}
             onClick={handleOnClick}
+            onKeyDown={handleOnKeyDown}
             id={name}
             className={className}
             type="checkbox"
