@@ -198,14 +198,14 @@ const BaseInputField = forwardRef<
     }
 
     // Handle number min value, when character length is equal or greater
-    if (
-      min &&
-      String(min).length <= returnValue.length &&
-      Number(returnValue) < min
-    ) {
-      returnValue = min.toString();
-      onMinValue && onMinValue();
-    }
+    // if (
+    //   min &&
+    //   String(min).length <= returnValue.length &&
+    //   Number(returnValue) < min
+    // ) {
+    //   returnValue = min.toString();
+    //   onMinValue && onMinValue();
+    // }
 
     // Replace decimal point with preferred one
     returnValue = returnValue.replace(/[\.\,]+/g, dPoint);

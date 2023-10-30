@@ -75,17 +75,18 @@ const Home = () => {
                     console.log('hej');
                   }}
                 />
-                {/* <BaseInputField
+                <BaseInputField
                   integer
-                  label="label"
+                  label="testa här"
                   name="integer"
                   placeholder="Number input test - integer"
                   type="number"
-                  // decimalPoint="."
-                  // min={20}
-                  // max={300}
-                  // inputMode="decimal"
+                  decimalPoint="."
+                  min={20}
+                  max={300}
+                  inputMode="decimal"
                 />
+                {/* 
 
                 <BaseInputFile
                   multiple
@@ -172,14 +173,14 @@ const Home = () => {
                 />
                 <BaseInputField
                   integer
-                  label="label"
+                  label="testa här"
                   name="integer"
                   placeholder="Number input test - integer"
                   type="number"
-                  // decimalPoint="."
-                  // min={20}
-                  // max={300}
-                  // inputMode="decimal"
+                  decimalPoint="."
+                  min={20}
+                  max={300}
+                  inputMode="decimal"
                 />
               </div>
             </FocusTrap>
