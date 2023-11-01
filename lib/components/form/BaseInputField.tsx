@@ -216,16 +216,22 @@ const BaseInputField = forwardRef<
   const handleOnBlur = (event: FocusEvent<HTMLInputElement>) => {
     const elem = event.target as any;
 
-    // Handle min value
-    if (min && Number(elem.value) < min) {
-      elem.value = min.toString();
-      onMinValue && onMinValue();
-    }
+    if (props.type === 'number') {
+      if (elem.value === '-') {
+        elem.value = '';
+      }
 
-    // Handle max value, max < 0
-    if (max && max <= 0 && Number(elem.value) >= max) {
-      elem.value = max.toString();
-      onMaxValue && onMaxValue();
+      // Handle min value
+      if (elem.value && min && Number(elem.value) < min) {
+        elem.value = min.toString();
+        onMinValue && onMinValue();
+      }
+
+      // Handle max value, max < 0
+      if (elem.value && max && max <= 0 && Number(elem.value) >= max) {
+        elem.value = max.toString();
+        onMaxValue && onMaxValue();
+      }
     }
 
     handleOnFocus(event);
