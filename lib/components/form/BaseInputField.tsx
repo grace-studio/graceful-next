@@ -285,8 +285,6 @@ const BaseInputField = forwardRef<
         'Tab',
       ].includes(event.key);
 
-      console.log(elem.selectionStart);
-
       if (elem.value.length > 0 && elem.selectionStart && event.key === '-') {
         isAllowed = false;
       }
