@@ -222,7 +222,7 @@ const BaseInputField = forwardRef<
       }
 
       // Handle min value
-      if (elem.value && min && Number(elem.value) < min) {
+      if (elem.value && typeof min === 'number' && Number(elem.value) < min) {
         elem.value = min.toString();
         onMinValue && onMinValue();
       }
@@ -285,7 +285,13 @@ const BaseInputField = forwardRef<
         'Tab',
       ].includes(event.key);
 
-      if (elem.value.length > 0 && event.key === '-') {
+      console.log(elem.selectionStart);
+
+      if (elem.value.length > 0 && elem.selectionStart && event.key === '-') {
+        isAllowed = false;
+      }
+
+      if (typeof min === 'number' && min >= 0 && event.key === '-') {
         isAllowed = false;
       }
 

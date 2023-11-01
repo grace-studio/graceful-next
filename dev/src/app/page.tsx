@@ -178,7 +178,7 @@ const Home = () => {
                   placeholder="Number input test - integer"
                   type="number"
                   decimalPoint="."
-                  min={20}
+                  min={0}
                   max={300}
                   inputMode="decimal"
                 />
