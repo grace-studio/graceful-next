@@ -107,6 +107,7 @@
     "react-gtm-module": "2.0.11",
     "react-hook-form": "7.47.0",
     "react-hotkeys-hook": "4.4.1",
+    "type-fest": "4.6.0",
     "yup": "1.3.2"
   }
 }

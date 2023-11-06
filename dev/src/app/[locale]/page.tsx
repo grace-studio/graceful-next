@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/hooks/useTranslation';
 import {
   BaseAccordion,
   BaseButton,
@@ -14,6 +15,7 @@ import {
   FocusTrap,
 } from '@grace-studio/graceful-next/components';
 import { useSetClassOnTab } from '@grace-studio/graceful-next/hooks';
+import { useLocale } from 'next-intl';
 import { useState } from 'react';
 
 const selectOptions = [
@@ -41,8 +43,11 @@ const Home = () => {
   const [show, setShow] = useState(true);
   useSetClassOnTab('tabbing', 'body');
 
+  const t = useTranslation(useLocale());
+
   return (
     <BaseContentWrapper className="mt-20">
+      <div className="p-20">{t('str.e.hej.japp')}</div>
       <BaseButton onClick={() => setIsDrawerOpen(true)}>Open drawer</BaseButton>
 
       <Drawer

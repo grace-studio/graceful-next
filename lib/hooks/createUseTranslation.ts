@@ -1,10 +1,12 @@
+'use client';
 import { useRouter } from 'next/router';
+import type { PartialDeep } from 'type-fest';
 
-const getLeave = (obj: any, keys: string[]): any => {
+const getLeave = (obj: any, keys: string[]): string | null => {
   const [key] = keys;
 
   if (!obj) {
-    return '';
+    return null;
   }
 
   if (typeof obj === 'string') {
@@ -18,25 +20,63 @@ const getLeave = (obj: any, keys: string[]): any => {
   return getLeave(obj[key], keys.slice(1));
 };
 
-const getTranslation = <T, P extends string>(translation: T, path: P) =>
-  getLeave(translation, path.split('.')) as string;
+const getTranslation = <Translation, Paths extends string>(
+  translation: Translation,
+  path: Paths,
+) => getLeave(translation, path.split('.'));
 
 export const createUseTranslation =
   <
-    P extends string,
-    T extends Record<string, any> = object,
-    L extends string = string
+    Paths extends string,
+    Translation extends Record<string, any> = object,
+    Locale extends string = string,
   >(
-    translations: Record<L, T>,
-    defaultTranslation?: T
+    defaultLocale: Translation,
+    translations: Record<Locale, PartialDeep<Translation>>,
+    router: 'app' | 'pages' = 'app',
   ) =>
-  () => {
-    const { locale } = useRouter();
-    const translation = translations[locale as L] || defaultTranslation;
+  (locale?: Locale) => {
+    let _locale = locale;
+    if (router === 'pages') {
+      _locale = useRouter().locale as Locale;
+    }
 
-    const get = (path: P) => getTranslation<T, P>(translation, path);
+    if (!_locale) {
+      console.error('createUseTranslation: No locale provided');
+    }
 
-    return {
-      get,
+    if (_locale && translations && !translations[_locale]) {
+      console.error(
+        `createUseTranslation: No translations provided for locale: '${_locale}'`,
+      );
+    }
+
+    const localeTranslation =
+      _locale && translations ? translations[_locale] : {};
+
+    return (path: Paths) => {
+      const str = getTranslation<Translation, Paths>(
+        localeTranslation as Translation,
+        path,
+      );
+      if (typeof str === 'string') {
+        return str;
+      }
+      console.warn(
+        `getTranslation: No translation string found for path: '${path}', locale: '${_locale}'`,
+      );
+
+      const defaultStr = getTranslation<Translation, Paths>(
+        defaultLocale as Translation,
+        path,
+      );
+      if (typeof defaultStr === 'string') {
+        return defaultStr;
+      }
+      console.warn(
+        `getTranslation: No translation string found for path: '${path}', locale: 'default'`,
+      );
+
+      return path;
     };
   };

@@ -1,4 +1,5 @@
 export * from './createUseTranslation';
+export * from './createUseTranslationPagesRouter';
 export type { Leaves } from '../types';
 export * from './useMicroStore';
 export * from './useMousePosition';
