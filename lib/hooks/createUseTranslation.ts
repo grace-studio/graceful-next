@@ -1,6 +1,7 @@
 'use client';
 import { useRouter } from 'next/router';
 import type { PartialDeep } from 'type-fest';
+import { Leaves } from '../types';
 
 const getLeave = (obj: any, keys: string[]): string | null => {
   const [key] = keys;
@@ -27,7 +28,6 @@ const getTranslation = <Translation, Paths extends string>(
 
 export const createUseTranslation =
   <
-    Paths extends string,
     Translation extends Record<string, any> = object,
     Locale extends string = string,
   >(
@@ -36,6 +36,8 @@ export const createUseTranslation =
     router: 'app' | 'pages' = 'app',
   ) =>
   (locale?: Locale) => {
+    type Paths = Leaves<typeof defaultLocale>;
+
     let _locale = locale;
     if (router === 'pages') {
       _locale = useRouter().locale as Locale;
