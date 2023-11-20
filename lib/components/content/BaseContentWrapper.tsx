@@ -22,6 +22,7 @@ const contentWidthClasses: Record<ContentWidth, string[]> = {
 
 export type BaseContentWrapperProps = PropsWithChildren<{
   id?: string;
+  dataComponent?: string;
   elementType?: string;
   className?: string;
   marginAfter?: MarginAfter;
@@ -45,6 +46,7 @@ const BaseContentWrapper: FC<
     contentWidthDefinition = contentWidthClasses,
     sidePaddingClassName = 'px-3 tablet:px-30',
     className,
+    dataComponent,
   } = props;
   const classes = classNames(
     'mx-auto',
@@ -58,7 +60,7 @@ const BaseContentWrapper: FC<
   const Elem = elementType as keyof JSX.IntrinsicElements;
 
   return (
-    <Elem id={id} className={classes}>
+    <Elem id={id} className={classes} data-component={dataComponent}>
       {children}
     </Elem>
   );
