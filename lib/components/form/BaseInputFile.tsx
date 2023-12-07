@@ -5,9 +5,11 @@ import React, {
   forwardRef,
   useImperativeHandle,
   useEffect,
+  useContext,
 } from 'react';
 import { FieldError, useFormContext } from 'react-hook-form';
 import { useMicroStore } from '../../hooks/useMicroStore';
+import { FormOptionsContext } from './Form';
 
 export type FileInputState = {
   hasFocus: boolean;
@@ -82,6 +84,7 @@ const BaseInputFile = forwardRef<
     formState: { errors },
   } = useFormContext();
   const [state, dispatch] = useMicroStore(initialState);
+  const formOptions = useContext(FormOptionsContext);
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const fileList = e.target?.files;

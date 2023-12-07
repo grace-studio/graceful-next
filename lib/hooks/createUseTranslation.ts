@@ -34,11 +34,12 @@ export const createUseTranslation =
     defaultLocale: Translation,
     translations: Record<Locale, PartialDeep<Translation>>,
     router: 'app' | 'pages' = 'app',
+    verbose?: boolean,
   ) =>
-  (locale?: Locale) => {
+  (locale?: Locale | string) => {
     type Paths = Leaves<typeof defaultLocale>;
 
-    let _locale = locale;
+    let _locale = locale as Locale;
     if (router === 'pages') {
       _locale = useRouter().locale as Locale;
     }
@@ -64,9 +65,10 @@ export const createUseTranslation =
       if (typeof str === 'string') {
         return str;
       }
-      console.warn(
-        `getTranslation: No translation string found for path: '${path}', locale: '${_locale}'`,
-      );
+      verbose &&
+        console.warn(
+          `getTranslation: No translation string found for path: '${path}', locale: '${_locale}'`,
+        );
 
       const defaultStr = getTranslation<Translation, Paths>(
         defaultLocale as Translation,
@@ -75,9 +77,10 @@ export const createUseTranslation =
       if (typeof defaultStr === 'string') {
         return defaultStr;
       }
-      console.warn(
-        `getTranslation: No translation string found for path: '${path}', locale: 'default'`,
-      );
+      verbose &&
+        console.warn(
+          `getTranslation: No translation string found for path: '${path}', locale: 'default'`,
+        );
 
       return path;
     };

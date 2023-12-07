@@ -6,9 +6,11 @@ import React, {
   useImperativeHandle,
   FocusEvent,
   useEffect,
+  useContext,
 } from 'react';
 import { FieldError, useFormContext } from 'react-hook-form';
 import { useMicroStore } from '../../hooks/useMicroStore';
+import { FormOptionsContext } from './Form';
 
 export type RadioButtonState = {
   hasFocus: boolean;
@@ -71,6 +73,7 @@ const BaseRadioButton = forwardRef<
     watch,
   } = useFormContext();
   const [state, dispatch] = useMicroStore(initialState);
+  const formOptions = useContext(FormOptionsContext);
 
   useImperativeHandle(ref, () => ({
     setValue: (value: string) => setValue(name, value),
@@ -111,13 +114,6 @@ const BaseRadioButton = forwardRef<
     dispatch({ value: event.target.value });
   };
 
-  const handleOnKeyDown = (event: any) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      return;
-    }
-  };
-
   return (
     <>
       <div className="relative">
@@ -132,7 +128,6 @@ const BaseRadioButton = forwardRef<
             onFocus={handleOnFocus}
             onBlur={handleOnFocus}
             onChange={handleOnChange}
-            onKeyDown={handleOnKeyDown}
             id={`${name}-${value}`}
             className={className}
             value={value}

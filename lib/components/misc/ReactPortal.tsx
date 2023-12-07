@@ -18,14 +18,12 @@ const ReactPortal: FC<ReactPortalProps> = ({
     return () => setMounted(false);
   }, []);
 
-  return mounted ? (
-    createPortal(
-      children as any, // Temporary fix for error in Next 13.4.0?
-      document.querySelector(portalQuerySelector) as Element,
-    )
-  ) : (
-    <></>
-  );
+  return mounted
+    ? createPortal(
+        children as any, // Temporary fix for error in Next 13.4.0?
+        document.querySelector(portalQuerySelector) as Element,
+      )
+    : null;
 };
 
 export default ReactPortal;

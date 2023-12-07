@@ -6,9 +6,11 @@ import React, {
   useImperativeHandle,
   FocusEvent,
   useEffect,
+  useContext,
 } from 'react';
 import { FieldError, useFormContext } from 'react-hook-form';
 import { useMicroStore } from '../../hooks/useMicroStore';
+import { FormOptionsContext } from './Form';
 
 export type InputState = {
   hasFocus: boolean;
@@ -101,6 +103,7 @@ const BaseInputField = forwardRef<
     setFocus,
   } = useFormContext();
   const [state, dispatch] = useMicroStore(initialState);
+  const formOptions = useContext(FormOptionsContext);
 
   let inputMode = _inputMode;
   // Set default input mode
@@ -258,12 +261,16 @@ const BaseInputField = forwardRef<
 
     if (event.key === 'Enter') {
       onEnter && onEnter();
-      event.preventDefault();
-      return;
+
+      if (formOptions.preventSubmitOnEnter) {
+        event.preventDefault();
+        return;
+      }
     }
 
     if (props.type === 'number') {
       let isAllowed = [
+        'Enter',
         '0',
         '1',
         '2',

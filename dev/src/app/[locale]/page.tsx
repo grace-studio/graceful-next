@@ -64,6 +64,7 @@ const Home = () => {
               <BaseButton onClick={() => setIsDrawerOpen(false)}>X</BaseButton>
             </div>
             <Form
+              preventSubmitOnEnter
               defaultValues={{ check: true }}
               onSubmit={(val) => {
                 console.log('sub');
@@ -147,8 +148,9 @@ const Home = () => {
         {/* </FocusTrap> */}
 
         <Form
+          preventSubmitOnEnter
           onSubmit={console.log}
-          onValuesChange={console.log}
+          // onValuesChange={console.log}
           defaultValues={{ radio: 'val2' }}
         >
           <div className="mt-10 grid gap-10 grid-cols-2">
@@ -176,6 +178,7 @@ const Home = () => {
                   value="val2"
                   label="radio label 2"
                 />
+                <BaseCheckbox name="check" label="checkbox" />
                 <BaseInputField
                   integer
                   label="testa här"
@@ -231,9 +234,7 @@ const Home = () => {
 
           <FocusTrap mode="combined" active>
             <div className="mt-10 p-4 grid grid-cols-2 gap-10 border-4 border-red-400">
-              <BaseButton disabled submit>
-                Submit
-              </BaseButton>
+              <BaseButton submit>Submit</BaseButton>
             </div>
           </FocusTrap>
         </Form>

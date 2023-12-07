@@ -5,9 +5,11 @@ import React, {
   useImperativeHandle,
   FocusEvent,
   useEffect,
+  useContext,
 } from 'react';
 import { FieldError, useFormContext } from 'react-hook-form';
 import { useMicroStore } from '../../hooks/useMicroStore';
+import { FormOptionsContext } from './Form';
 
 export type CheckboxState = {
   hasFocus: boolean;
@@ -66,6 +68,7 @@ const BaseCheckbox = forwardRef<
     watch,
   } = useFormContext();
   const [state, dispatch] = useMicroStore(initialState);
+  const formOptions = useContext(FormOptionsContext);
 
   useImperativeHandle(ref, () => ({
     setChecked: (checked: boolean) => setValue(name, checked),
@@ -106,14 +109,6 @@ const BaseCheckbox = forwardRef<
     dispatch({ checked: !state.checked });
   };
 
-  const handleOnKeyDown = (event: any) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      handleOnClick();
-      return;
-    }
-  };
-
   return (
     <>
       <div className="relative">
@@ -128,7 +123,6 @@ const BaseCheckbox = forwardRef<
             onFocus={handleOnFocus}
             onBlur={handleOnFocus}
             onClick={handleOnClick}
-            onKeyDown={handleOnKeyDown}
             id={name}
             className={className}
             type="checkbox"

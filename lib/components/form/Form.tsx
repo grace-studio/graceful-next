@@ -1,5 +1,6 @@
 'use client';
 import React, {
+  createContext,
   forwardRef,
   PropsWithChildren,
   useEffect,
@@ -17,14 +18,23 @@ import {
 import { ObjectSchema } from 'yup';
 import classNames from 'classnames';
 
-type FormProps = PropsWithChildren<{
-  onSubmit: (values: Record<string, string>) => void;
-  onValuesChange?: (values: Record<string, string>) => void;
-  validationSchema?: ObjectSchema<any>;
-  defaultValues?: any;
-  formProps?: UseFormProps;
-  className?: string;
-}>;
+type FormOptionsContextType = {
+  disabled?: boolean;
+  preventSubmitOnEnter?: boolean;
+};
+
+export const FormOptionsContext = createContext<FormOptionsContextType>({});
+
+type FormProps = PropsWithChildren<
+  FormOptionsContextType & {
+    onSubmit: (values: Record<string, string>) => void;
+    onValuesChange?: (values: Record<string, string>) => void;
+    validationSchema?: ObjectSchema<any>;
+    defaultValues?: any;
+    formProps?: UseFormProps;
+    className?: string;
+  }
+>;
 
 export type FormRef = UseFormReturn;
 
@@ -37,6 +47,7 @@ const Form = forwardRef<FormRef, FormProps>(function Form(
     defaultValues,
     className,
     formProps = {},
+    ...formOptions
   },
   ref,
 ) {
@@ -48,6 +59,15 @@ const Form = forwardRef<FormRef, FormProps>(function Form(
   });
   const watch = methods.watch();
   const formState = useRef<{ values: Record<string, string> }>({ values: {} });
+  const fieldsetRef = useRef<HTMLFieldSetElement>(null);
+
+  useEffect(() => {
+    if (formOptions.disabled) {
+      fieldsetRef.current?.setAttribute('disabled', 'true');
+    } else {
+      fieldsetRef.current?.removeAttribute('disabled');
+    }
+  }, [formOptions.disabled]);
 
   useEffect(() => {
     const currentValues = JSON.stringify(formState.current.values);
@@ -64,11 +84,16 @@ const Form = forwardRef<FormRef, FormProps>(function Form(
   const classes = classNames('block h-full', className);
 
   return (
-    <FormProvider {...methods}>
-      <form className={classes} onSubmit={methods.handleSubmit(handleOnSubmit)}>
-        {children}
-      </form>
-    </FormProvider>
+    <FormOptionsContext.Provider value={formOptions}>
+      <FormProvider {...methods}>
+        <form
+          className={classes}
+          onSubmit={methods.handleSubmit(handleOnSubmit)}
+        >
+          <fieldset ref={fieldsetRef}>{children}</fieldset>
+        </form>
+      </FormProvider>
+    </FormOptionsContext.Provider>
   );
 });
 

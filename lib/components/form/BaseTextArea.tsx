@@ -6,9 +6,11 @@ import React, {
   useImperativeHandle,
   FocusEvent,
   useEffect,
+  useContext,
 } from 'react';
 import { FieldError, useFormContext } from 'react-hook-form';
 import { useMicroStore } from '../../hooks/useMicroStore';
+import { FormOptionsContext } from './Form';
 
 export type TextAreaState = {
   hasFocus: boolean;
@@ -71,8 +73,9 @@ const BaseTextArea = forwardRef<
     formState: { errors },
     setFocus,
   } = useFormContext();
-
   const [state, dispatch] = useMicroStore(initialState);
+  const formOptions = useContext(FormOptionsContext);
+
   useImperativeHandle(ref, () => ({
     setValue: (value: string) => {
       setValue(name, value);
