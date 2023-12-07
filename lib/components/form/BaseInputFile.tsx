@@ -38,6 +38,7 @@ export type BaseInputFileProps = {
   multiple?: boolean;
   onFilesChange?: (files: FileList | null) => void;
   onStateChange?: (state: FileInputState) => void;
+  fileNamesPlacement?: 'inside' | 'below';
 };
 
 export type BaseInputFileRef = {};
@@ -64,9 +65,10 @@ const BaseInputFile = forwardRef<
     wrapperClassName = 'border-4 outline-none border-gray-900 bg-gray-100 h-16 text-lg w-full \
     px-6 text-black disabled:bg-gray-200 disabled:text-gray-400 focus:border-fuchsia-600 grid grid-cols-[1fr_auto] content-center',
     labelClassName = 'flex items-center',
-    labelWrapperClassName = 'flex items-center cursor-pointer',
+    labelWrapperClassName = 'flex flex-row gap-1 items-center cursor-pointer',
     filesCountClassName = '',
     fileNamesClassName = '',
+    fileNamesPlacement = 'inside',
     errorClassName = 'text-red-500',
     onStateChange,
     onFilesChange,
@@ -118,9 +120,11 @@ const BaseInputFile = forwardRef<
                 <div className={filesCountClassName}>
                   ({state.fileNames.length})
                 </div>
-                <div className={fileNamesClassName}>
-                  {state.fileNames.join(',')}
-                </div>
+                {fileNamesPlacement == 'inside' && (
+                  <div className={fileNamesClassName}>
+                    {state.fileNames.join(', ')}
+                  </div>
+                )}
               </>
             )}
           </label>
@@ -134,6 +138,10 @@ const BaseInputFile = forwardRef<
           />
           {note}
         </div>
+
+        {fileNamesPlacement == 'below' && (
+          <div className={fileNamesClassName}>{state.fileNames.join(', ')}</div>
+        )}
         {state.errorMessage && !props.disabled && (
           <div className={errorClassName}>{state.errorMessage}</div>
         )}
