@@ -33,7 +33,7 @@ type FormProps = PropsWithChildren<
     defaultValues?: any;
     formProps?: UseFormProps;
     className?: string;
-    fieldsetClassName?: string;
+    wrapperClassName?: string;
   }
 >;
 
@@ -47,7 +47,7 @@ const Form = forwardRef<FormRef, FormProps>(function Form(
     children,
     defaultValues,
     className,
-    fieldsetClassName = 'h-full',
+    wrapperClassName,
     formProps = {},
     ...formOptions
   },
@@ -89,10 +89,10 @@ const Form = forwardRef<FormRef, FormProps>(function Form(
     <FormOptionsContext.Provider value={formOptions}>
       <FormProvider {...methods}>
         <form
-          className={classes}
+          className={wrapperClassName}
           onSubmit={methods.handleSubmit(handleOnSubmit)}
         >
-          <fieldset className={fieldsetClassName} ref={fieldsetRef}>
+          <fieldset className={classes} ref={fieldsetRef}>
             {children}
           </fieldset>
         </form>
