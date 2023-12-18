@@ -3,7 +3,8 @@
     "some": "string",
     "e": {
       "hej": {
-        "japp": "string"
+        "japp": "string",
+        "other": "hej"
       }
     }
   },

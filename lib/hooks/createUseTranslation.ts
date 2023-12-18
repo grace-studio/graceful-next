@@ -33,7 +33,8 @@ const getLeafPaths = (
 
   const traverse = (node: TreeLeaf, path: string[]): void => {
     if (typeof node === 'string') {
-      leafPaths.push([...path, node].join('.'));
+      leafPaths.push(path.join('.'));
+
       return;
     }
 
