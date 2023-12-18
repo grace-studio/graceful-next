@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import type { PartialDeep } from 'type-fest';
 import { Leaves } from '../types';
 
-const getLeave = (obj: any, keys: string[]): string | null => {
+const getLeaf = (obj: any, keys: string[]): string | null => {
   const [key] = keys;
 
   if (!obj) {
@@ -18,13 +18,43 @@ const getLeave = (obj: any, keys: string[]): string | null => {
     return obj[key];
   }
 
-  return getLeave(obj[key], keys.slice(1));
+  return getLeaf(obj[key], keys.slice(1));
+};
+
+type TreeLeaf = {
+  [key: string]: string | TreeLeaf;
+};
+
+const getLeafPaths = (
+  treeObject: TreeLeaf,
+  currentPath: string[] = [],
+): string[] => {
+  const leafPaths: string[] = [];
+
+  const traverse = (node: TreeLeaf, path: string[]): void => {
+    if (typeof node === 'string') {
+      leafPaths.push([...path, node].join('.'));
+      return;
+    }
+
+    if (typeof node === 'object' && node !== null) {
+      for (const key in node) {
+        if (node.hasOwnProperty(key)) {
+          traverse(node[key] as TreeLeaf, [...path, key]);
+        }
+      }
+    }
+  };
+
+  traverse(treeObject, currentPath);
+
+  return leafPaths;
 };
 
 const getTranslation = <Translation, Paths extends string>(
   translation: Translation,
   path: Paths,
-) => getLeave(translation, path.split('.'));
+) => getLeaf(translation, path.split('.'));
 
 export const createUseTranslation =
   <
@@ -57,14 +87,16 @@ export const createUseTranslation =
     const localeTranslation =
       _locale && translations ? translations[_locale] : {};
 
-    return (path: Paths) => {
+    function getT(path: Paths) {
       const str = getTranslation<Translation, Paths>(
         localeTranslation as Translation,
         path,
       );
+
       if (typeof str === 'string') {
         return str;
       }
+
       verbose &&
         console.warn(
           `getTranslation: No translation string found for path: '${path}', locale: '${_locale}'`,
@@ -74,14 +106,50 @@ export const createUseTranslation =
         defaultLocale as Translation,
         path,
       );
+
       if (typeof defaultStr === 'string') {
         return defaultStr;
       }
+
       verbose &&
         console.warn(
           `getTranslation: No translation string found for path: '${path}', locale: 'default'`,
         );
 
       return path;
-    };
+    }
+
+    return getT;
   };
+
+export const printTranslationMissingLeaves = <
+  Translation extends Record<string, any> = object,
+  Locale extends string = string,
+>(
+  defaultLocale: Translation,
+  translations: Record<Locale, PartialDeep<Translation>>,
+) => {
+  const defaultLeaves = getLeafPaths(defaultLocale);
+  Object.entries(translations).forEach(([key, lang]: [string, any]) => {
+    const leaves = new Set(getLeafPaths(lang));
+    const result = new Set(defaultLeaves);
+    leaves.forEach((leaf) => {
+      result.delete(leaf);
+    });
+    const resultArray = [...result];
+
+    if (resultArray.length) {
+      console.warn(
+        `Missing translations for language: \n\n ${key.toUpperCase()}\n${JSON.stringify(
+          resultArray,
+          null,
+          1,
+        )
+          .replaceAll('[', '')
+          .replaceAll('"', '')
+          .replaceAll(',', '')
+          .replaceAll(']', '')}`,
+      );
+    }
+  });
+};
