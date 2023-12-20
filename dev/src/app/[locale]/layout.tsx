@@ -1,6 +1,7 @@
 import { NextIntlClientProvider } from 'next-intl';
 import '../globals.css';
 import { Inter } from 'next/font/google';
+import { GTMInitialize } from '@grace-studio/graceful-next/components';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,6 +19,7 @@ const Layout = ({
 }) => {
   return (
     <html lang="en">
+      <GTMInitialize id={process.env.NEXT_PUBLIC_GTM_ID} />
       <body className={inter.className}>
         <NextIntlClientProvider locale={locale}>
           {children}

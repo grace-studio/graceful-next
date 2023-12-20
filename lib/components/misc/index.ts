@@ -10,3 +10,5 @@ export type { IconProps, IconWrapperProps } from './IconWrapper';
 
 export { default as Metadata } from './Metadata';
 export type { MetadataType } from './Metadata';
+
+export { default as GTMInitialize } from './GTMInitialize';
