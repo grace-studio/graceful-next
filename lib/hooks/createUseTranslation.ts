@@ -137,19 +137,12 @@ export const printTranslationMissingLeaves = <
     leaves.forEach((leaf) => {
       result.delete(leaf);
     });
-    const resultArray = [...result];
+    const resultArray = Array.from(result);
 
     if (resultArray.length) {
       console.warn(
-        `Missing translations for language: \n\n ${key.toUpperCase()}\n${JSON.stringify(
-          resultArray,
-          null,
-          1,
-        )
-          .replaceAll('[', '')
-          .replaceAll('"', '')
-          .replaceAll(',', '')
-          .replaceAll(']', '')}`,
+        `Missing translations for language: \n\n ${key.toUpperCase()}
+        \n${resultArray.join('\n')}`,
       );
     }
   });
