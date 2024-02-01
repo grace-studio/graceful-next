@@ -1,10 +1,12 @@
 import createMiddleware from 'next-intl/middleware';
-import { i18n } from '../i18n.config';
+import { locales } from '../i18n.config';
 
-export default createMiddleware(i18n);
+export default createMiddleware({
+  defaultLocale: locales[0],
+  localeDetection: false,
+  locales,
+});
 
 export const config = {
-  // Skip all paths that should not be internationalized. This example skips the
-  // folders "api", "_next" and all files with an extension (e.g. favicon.ico)
-  matcher: ['/((?!api|_next|.*\\..*).*)'],
+  matcher: ['/', '/(sv|en)/:path*'],
 };
