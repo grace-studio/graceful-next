@@ -1,11 +1,10 @@
-'use client';
 import { NextArray } from '../../types';
 import { FC } from 'react';
 import React from 'react';
 
 export type DynamicZoneProps = object & {
   blocks: NextArray<object & { blockName: string }>;
-  blockDefinition: object;
+  blockDefinition: Record<string, any>;
 };
 
 const DynamicZone: FC<DynamicZoneProps> = ({
@@ -16,7 +15,7 @@ const DynamicZone: FC<DynamicZoneProps> = ({
   <>
     {blocks.map((block) => {
       const name = block.blockName as keyof typeof blockDefinition;
-      const ImportedModule = blockDefinition[name] as any;
+      const ImportedModule = blockDefinition[name];
 
       return ImportedModule ? (
         <div key={block._key} data-component-name={name}>

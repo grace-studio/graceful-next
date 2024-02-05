@@ -1,4 +1,3 @@
-'use client';
 import classNames from 'classnames';
 import React from 'react';
 import { FC, PropsWithChildren } from 'react';
@@ -30,7 +29,7 @@ const IconWrapper: FC<IconWrapperProps> = (props) => {
   const classes = classNames(
     'inline-block',
     !(className?.includes('h-') || className?.includes('w-')) && 'h-[1em]',
-    className
+    className,
   );
 
   return (

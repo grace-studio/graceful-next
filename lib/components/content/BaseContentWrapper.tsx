@@ -57,7 +57,7 @@ const BaseContentWrapper: FC<
     className,
   );
 
-  const Elem = elementType as keyof JSX.IntrinsicElements;
+  const Elem = elementType as any;
 
   return (
     <Elem id={id} className={classes} data-component={dataComponent}>

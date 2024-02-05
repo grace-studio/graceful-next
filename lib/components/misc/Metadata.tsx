@@ -1,4 +1,3 @@
-'use client';
 import Head from 'next/head';
 import type { FC } from 'react';
 import React from 'react';

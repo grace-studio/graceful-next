@@ -1,6 +1,6 @@
 'use client';
 import { createPortal } from 'react-dom';
-import React, { FC, PropsWithChildren, useEffect, useState } from 'react';
+import { FC, PropsWithChildren, useEffect, useState } from 'react';
 
 type ReactPortalProps = PropsWithChildren<{
   portalQuerySelector: string;
