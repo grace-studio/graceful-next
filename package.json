@@ -34,6 +34,9 @@
       "utils": [
         "lib/utils/index.ts"
       ],
+      "misc": [
+        "lib/misc/index.ts"
+      ],
       "components": [
         "lib/components/index.ts"
       ],
