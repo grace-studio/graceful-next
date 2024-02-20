@@ -143,3 +143,27 @@ const randomString = generateUUID();
 - [`getBlockName`](#getblockname)
 
 ### `getBlockName`
+
+## Misc
+
+### Next Image Loader
+
+Enable the use of a **imgproxy** server by setting the file loader for Next images.
+
+In `next.config.js` add:
+
+```js
+images: {
+  loader: 'custom',
+  loaderFile: './src/image-loader.ts',
+}
+```
+
+Add a file `src/image-loader.ts` with the following content:
+
+```ts
+'use client';
+import { imageLoader } from '@grace-studio/graceful-next/misc';
+
+export default imageLoader(IMAGE_PROXY_URL);
+```

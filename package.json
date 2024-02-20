@@ -8,6 +8,10 @@
       "import": "./lib/utils/index.ts",
       "require": "./lib/utils/index.ts"
     },
+    "./misc": {
+      "import": "./lib/misc/index.ts",
+      "require": "./lib/misc/index.ts"
+    },
     "./components": {
       "import": "./lib/components/index.ts",
       "require": "./lib/components/index.ts"

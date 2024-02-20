@@ -16,6 +16,7 @@ import {
 } from '@grace-studio/graceful-next/components';
 import { useSetClassOnTab } from '@grace-studio/graceful-next/hooks';
 import { useLocale } from 'next-intl';
+import Image from 'next/image';
 import { useState } from 'react';
 
 const selectOptions = [
@@ -47,6 +48,12 @@ const Home = () => {
 
   return (
     <BaseContentWrapper className="mt-20">
+      <Image
+        alt=""
+        width={400}
+        height={300}
+        src="https://www.unfinishedman.com/wp-content/uploads/2016/05/terrible-taxidermy-fox.jpg"
+      />
       <div className="p-20">{t('str.e.hej.japp')}</div>
       <BaseButton onClick={() => setIsDrawerOpen(true)}>Open drawer</BaseButton>
 

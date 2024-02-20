@@ -5,6 +5,20 @@ const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ['@grace-studio/graceful-next'],
+  images: {
+    loader: 'custom',
+    loaderFile: './src/image-loader.ts',
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.unfinishedman.com',
+      },
+    ],
+  },
 };
 
 module.exports = withNextIntl(nextConfig);
