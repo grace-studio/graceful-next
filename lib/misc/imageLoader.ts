@@ -1,5 +1,5 @@
 'use client';
-import { ImageLoaderProps, getImageProps } from 'next/image';
+import { ImageLoaderProps } from 'next/image';
 
 const urlSafeBase64 = (str: string) =>
   Buffer.from(str)
@@ -8,24 +8,13 @@ const urlSafeBase64 = (str: string) =>
     .replace(/\+/g, '-')
     .replace(/\//g, '_');
 
-const getAbsolutePath = (src: string) => {
-  if (/http(s)*:\/\//.test(src)) {
-    return src;
-  }
-
-  if (typeof window === undefined) {
-    return src;
-  }
-
-  return window.location.origin + `/${src}`.replaceAll('//', '/');
-};
+const isLocalFile = (src: string) => !/http(s)*:\/\//.test(src);
 
 const createPath = (
   { src, width, quality = 75 }: ImageLoaderProps,
   extension: string,
 ) => {
-  const url = getAbsolutePath(src);
-  const encodedUrl = urlSafeBase64(url);
+  const encodedUrl = urlSafeBase64(src);
   const processingOptions = [`w:${width}`, `q:${quality}`].join('/');
 
   return `/${processingOptions}/${encodedUrl}.${extension}`;
@@ -48,12 +37,12 @@ const createSignature = (path: string) => {
 export const imageLoader =
   (proxyUrl: string, extension = 'webp') =>
   (options: ImageLoaderProps) => {
+    if (isLocalFile(options.src)) {
+      return `${options.src}?w=${options.width}`;
+    }
+
     const path = createPath(options, extension);
     const signature = createSignature(path);
-
-    if (process.env.NODE_ENV === 'development') {
-      return options.src;
-    }
 
     return `${proxyUrl}/${signature}${path}`;
   };
