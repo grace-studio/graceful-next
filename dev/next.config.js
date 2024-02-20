@@ -17,6 +17,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'www.unfinishedman.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'img.gracestudio.io',
+      },
     ],
   },
 };

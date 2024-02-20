@@ -110,7 +110,7 @@ const BaseAccordion = ({
       >
         {title}
       </button>
-      <div style={state.contentStyle} className={transitionClasses}>
+      <div style={state.contentStyle as any} className={transitionClasses}>
         <div ref={ref} className={contentClasses}>
           {content}
         </div>

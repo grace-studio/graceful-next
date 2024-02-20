@@ -52,8 +52,21 @@ const Home = () => {
         alt=""
         width={400}
         height={300}
+        src="https://storage.googleapis.com/cdn-gracestudio-io/grace-webb/hero_img_ee85bedacf/hero_img_ee85bedacf.webp"
+      />
+      <Image
+        alt=""
+        width={400}
+        height={300}
+        src="https://cdn.gracestudio.io/sesol/sesol_app_huawei_DSC_0710_7dc36deaf4/sesol_app_huawei_DSC_0710_7dc36deaf4.webp"
+      />
+      <Image
+        alt=""
+        width={400}
+        height={300}
         src="https://www.unfinishedman.com/wp-content/uploads/2016/05/terrible-taxidermy-fox.jpg"
       />
+      <Image alt="" width={400} height={300} src="/resize.jpeg" />
       <div className="p-20">{t('str.e.hej.japp')}</div>
       <BaseButton onClick={() => setIsDrawerOpen(true)}>Open drawer</BaseButton>
 

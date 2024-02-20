@@ -1,4 +1,5 @@
-import { ImageLoaderProps } from 'next/image';
+'use client';
+import { ImageLoaderProps, getImageProps } from 'next/image';
 
 const urlSafeBase64 = (str: string) =>
   Buffer.from(str)
@@ -7,17 +8,30 @@ const urlSafeBase64 = (str: string) =>
     .replace(/\+/g, '-')
     .replace(/\//g, '_');
 
+const getAbsolutePath = (src: string) => {
+  if (/http(s)*:\/\//.test(src)) {
+    return src;
+  }
+
+  if (typeof window === undefined) {
+    return src;
+  }
+
+  return window.location.origin + `/${src}`.replaceAll('//', '/');
+};
+
 const createPath = (
   { src, width, quality = 75 }: ImageLoaderProps,
   extension: string,
 ) => {
-  const encodedUrl = urlSafeBase64(src);
+  const url = getAbsolutePath(src);
+  const encodedUrl = urlSafeBase64(url);
   const processingOptions = [`w:${width}`, `q:${quality}`].join('/');
 
   return `/${processingOptions}/${encodedUrl}.${extension}`;
 };
 
-const hexDecode = (hex: string) => Buffer.from(hex, 'hex');
+// const hexDecode = (hex: string) => Buffer.from(hex, 'hex');
 
 const createSignature = (path: string) => {
   return urlSafeBase64('supersecret');
@@ -36,6 +50,10 @@ export const imageLoader =
   (options: ImageLoaderProps) => {
     const path = createPath(options, extension);
     const signature = createSignature(path);
+
+    if (process.env.NODE_ENV === 'development') {
+      return options.src;
+    }
 
     return `${proxyUrl}/${signature}${path}`;
   };
