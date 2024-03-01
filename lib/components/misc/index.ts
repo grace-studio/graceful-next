@@ -12,3 +12,5 @@ export { default as Metadata } from './Metadata';
 export type { MetadataType } from './Metadata';
 
 export { default as GTMInitialize } from './GTMInitialize';
+
+export { default as SetClassOnTab } from './SetClassOnTab';
