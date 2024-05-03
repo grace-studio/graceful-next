@@ -5,6 +5,7 @@ export type {
   BaseInputFieldRef,
 } from './BaseInputField';
 
+export { default as BaseFileUploader } from './BaseFileUploader';
 export { default as BaseInputFile } from './BaseInputFile';
 export type {
   FileInputState,

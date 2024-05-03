@@ -13,6 +13,7 @@ import {
   Drawer,
   Form,
   FocusTrap,
+  BaseFileUploader,
 } from '@grace-studio/graceful-next/components';
 import { useSetClassOnTab } from '@grace-studio/graceful-next/hooks';
 import { useLocale } from 'next-intl';
@@ -69,6 +70,14 @@ const Home = () => {
       <Image alt="" width={400} height={300} src="/resize.jpeg" />
       <div className="p-20">{t('str.e.hej.japp')}</div>
       <BaseButton onClick={() => setIsDrawerOpen(true)}>Open drawer</BaseButton>
+
+      <BaseFileUploader
+        messages={{
+          duplicates: 'Följande filer är redan uppladdade',
+          size: 'Följande filer är för stora',
+          maxCount: 'Max antal filer är',
+        }}
+      />
 
       <Drawer
         disableFocusTrap
