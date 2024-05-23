@@ -27,7 +27,7 @@ export const useSetClassOnTab = (
     }
 
     const addClass = (event: KeyboardEvent) => {
-      if (event.key.toLowerCase() === 'tab') {
+      if (event.key?.toLowerCase() === 'tab') {
         if (!elem.classList.contains(className)) {
           elem.classList.add(className);
         }
