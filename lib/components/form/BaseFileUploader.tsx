@@ -9,6 +9,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import mime from 'mime-types';
 
 export type BaseFileUploaderType = {
   onChange?: (files: File[]) => void;
@@ -18,6 +19,7 @@ export type BaseFileUploaderType = {
     duplicates: string;
     size: string;
     maxCount: string;
+    blacklist: string;
   };
   styles?: {
     wrapper?: string;
@@ -32,6 +34,7 @@ export type BaseFileUploaderType = {
     dragHover?: string;
   };
   options?: {
+    blacklist?: string[];
     multiple?: boolean;
     maxSize?: number;
     maxCount?: number;
@@ -85,6 +88,7 @@ const BaseFileUploader: FC<BaseFileUploaderType> = ({
     displaySize: true,
     multiple: true,
     messageDuration: 5000,
+    blacklist: [],
   };
 
   const defaultStyles = {
@@ -135,6 +139,11 @@ const BaseFileUploader: FC<BaseFileUploaderType> = ({
   const isFileTooLarge = ({ size }: File) => {
     return size > options?.maxSize!;
   };
+  const isFileInBlacklist = ({ type, ...file }: File) => {
+    const mimeType = mime.extension(type);
+    if (!mimeType) return true;
+    return options?.blacklist.includes(mimeType);
+  };
 
   function removeFile(file: File) {
     setUploadedFiles(uploadedFiles.filter(({ name }) => file.name !== name));
@@ -167,6 +176,7 @@ const BaseFileUploader: FC<BaseFileUploaderType> = ({
 
     const duplicates = newFiles.filter(isFileAlreadyAdded);
     const tooLargeFiles = newFiles.filter(isFileTooLarge);
+    const inBlacklist = newFiles.filter(isFileInBlacklist);
 
     let updatedFiles = newFiles;
 
@@ -174,11 +184,18 @@ const BaseFileUploader: FC<BaseFileUploaderType> = ({
     const fileNames = {
       duplicates: duplicates.map(({ name }) => name),
       largeFiles: tooLargeFiles.map(({ name }) => name),
+      blacklist: inBlacklist.map(({ name }) => name),
     };
 
     let messageList = [] as string[];
 
     // Add messages for eventual errors
+    if (inBlacklist.length > 0) {
+      messageList.push(
+        `${messages.blacklist}: ${fileNames.blacklist.join(', ')}`,
+      );
+    }
+
     if (duplicates.length > 0) {
       messageList.push(
         `${messages.duplicates}: ${fileNames.duplicates.join(', ')}`,
@@ -192,6 +209,7 @@ const BaseFileUploader: FC<BaseFileUploaderType> = ({
     const unsupportedFileNames = [
       ...fileNames.duplicates,
       ...fileNames.largeFiles,
+      ...fileNames.blacklist,
     ];
 
     // Filter out unsupported files before updating state

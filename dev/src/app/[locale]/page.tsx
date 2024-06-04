@@ -76,6 +76,10 @@ const Home = () => {
           duplicates: 'Följande filer är redan uppladdade',
           size: 'Följande filer är för stora',
           maxCount: 'Max antal filer är',
+          blacklist: 'Denna filtyp går inte att ladda upp',
+        }}
+        options={{
+          blacklist: ['txt', 'js', 'javascript', 'dmg', 'exe'],
         }}
       />
 

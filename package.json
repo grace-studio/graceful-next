@@ -108,9 +108,11 @@
     "test": "tests"
   },
   "dependencies": {
+    "@types/mime-types": "2.1.4",
     "@hookform/resolvers": "3.4.2",
     "@types/react-gtm-module": "2.0.3",
     "focus-trap": "7.5.4",
+    "mime-types": "^2.1.35",
     "react-gtm-module": "2.0.11",
     "react-hook-form": "7.51.5",
     "react-hotkeys-hook": "4.5.0",
