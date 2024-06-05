@@ -183,7 +183,7 @@ const Home = () => {
         <Form
           preventSubmitOnEnter
           onSubmit={console.log}
-          // onValuesChange={console.log}
+          onValuesChange={console.log}
           defaultValues={{ radio: 'val2' }}
         >
           <div className="mt-10 grid gap-10 grid-cols-2">
@@ -247,13 +247,13 @@ const Home = () => {
                     // inputMode="decimal"
                   />
                   <BaseInputField
-                    disabled
+                    // disabled
                     label="float with min"
                     name="integerMin"
                     placeholder="Number input test - float"
                     type="number"
                     decimalPoint="."
-                    min={200}
+                    min={20}
                     onMinValue={() => {
                       console.log('below min');
                     }}

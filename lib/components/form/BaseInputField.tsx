@@ -238,6 +238,7 @@ const BaseInputField = forwardRef<
     }
 
     handleOnFocus(event);
+    setValue(name, elem.value);
   };
 
   const handleOnInput = (event: any) => {
