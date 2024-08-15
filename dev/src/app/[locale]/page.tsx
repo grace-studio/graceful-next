@@ -14,6 +14,7 @@ import {
   Form,
   FocusTrap,
   BaseFileUploader,
+  BaseTooltip,
 } from '@grace-studio/graceful-next/components';
 import { useSetClassOnTab } from '@grace-studio/graceful-next/hooks';
 import { useLocale } from 'next-intl';
@@ -168,6 +169,41 @@ const Home = () => {
 
       <div className="mt-20">
         <BaseButton onClick={() => setShow(false)}>Remove</BaseButton>
+
+        <div className="mt-10 px-4 py-20 grid grid-cols-4 gap-10 gap-y-40 border-4 border-red-400">
+          <BaseTooltip content="top" position="top">
+            <BaseButton>base</BaseButton>
+          </BaseTooltip>
+          <BaseTooltip content="bottom" position="bottom">
+            <BaseButton>base</BaseButton>
+          </BaseTooltip>
+          <BaseTooltip content="left" position="left">
+            <BaseButton>base</BaseButton>
+          </BaseTooltip>
+          <BaseTooltip content="right" position="right">
+            <BaseButton>base</BaseButton>
+          </BaseTooltip>
+          <BaseTooltip arrow content="top" position="top">
+            <BaseButton>base</BaseButton>
+          </BaseTooltip>
+          <BaseTooltip arrow content="bottom" position="bottom">
+            <BaseButton>base</BaseButton>
+          </BaseTooltip>
+          <BaseTooltip arrow content="left" position="left">
+            <BaseButton>base</BaseButton>
+          </BaseTooltip>
+          <BaseTooltip arrow content="right" position="right">
+            <BaseButton>base</BaseButton>
+          </BaseTooltip>
+          <BaseTooltip
+            className="bg-red-400 text-black p-4 rounded-md"
+            wrapperClassName="p-4 transition-all duration-300 delay-0"
+            content="custom"
+            position="top"
+          >
+            <BaseButton>custom</BaseButton>
+          </BaseTooltip>
+        </div>
 
         {/* <FocusTrap mode="combined" noInitialFocus active> */}
         <div className="mt-10 p-4 grid grid-cols-2 gap-10 border-4 border-red-400">

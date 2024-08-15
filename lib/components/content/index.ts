@@ -7,4 +7,6 @@ export type {
 
 export { default as BaseAccordion } from './BaseAccordion';
 
+export { default as BaseTooltip } from './BaseTooltip';
+
 export { default as Drawer } from './Drawer';
