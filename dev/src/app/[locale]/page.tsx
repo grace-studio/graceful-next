@@ -218,7 +218,7 @@ const Home = () => {
 
         <Form
           preventSubmitOnEnter
-          onSubmit={console.log}
+          onSubmit={(value) => console.log(value)}
           onValuesChange={console.log}
           defaultValues={{ radio: 'val2' }}
         >
@@ -233,6 +233,7 @@ const Home = () => {
                   type="text"
                   label="label"
                   name="text"
+                  defaultValue="default thing"
                   placeholder="Text input"
                 />
                 <BaseRadioButton
@@ -253,6 +254,7 @@ const Home = () => {
                   label="testa här"
                   name="integer"
                   placeholder="Number input test - integer"
+                  defaultValue={123}
                   type="number"
                   decimalPoint="."
                   min={0}

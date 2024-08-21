@@ -58,6 +58,7 @@ export type BaseInputFieldProps = {
   placeholder?: string;
   disabled?: boolean;
   maxLength?: number;
+  defaultValue?: any;
   onStateChange?: (state: InputState) => void;
   onEnter?: () => void;
   inputMode?: InputMode;
@@ -92,6 +93,7 @@ const BaseInputField = forwardRef<
     onEnter,
     name,
     inputMode: _inputMode,
+    defaultValue,
     ...props
   },
   ref,
@@ -318,7 +320,9 @@ const BaseInputField = forwardRef<
         )}
         <div className={wrapperClassName}>
           <input
-            {...register(name)}
+            {...register(name, {
+              value: defaultValue,
+            })}
             id={name}
             className={className}
             onFocus={handleOnFocus}
