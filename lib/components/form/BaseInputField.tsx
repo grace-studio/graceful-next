@@ -104,7 +104,10 @@ const BaseInputField = forwardRef<
     formState: { errors },
     setFocus,
   } = useFormContext();
-  const [state, dispatch] = useMicroStore(initialState);
+  const [state, dispatch] = useMicroStore({
+    ...initialState,
+    value: defaultValue ?? '',
+  });
   const formOptions = useContext(FormOptionsContext);
 
   let inputMode = _inputMode;
