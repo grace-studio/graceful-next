@@ -255,6 +255,8 @@ const Home = () => {
                   name="integer"
                   placeholder="Number input test - integer"
                   defaultValue={123}
+                  onArrowDown={() => console.log('down')}
+                  onArrowUp={() => console.log('up')}
                   type="number"
                   decimalPoint="."
                   min={0}

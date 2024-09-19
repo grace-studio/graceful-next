@@ -61,6 +61,8 @@ export type BaseInputFieldProps = {
   defaultValue?: any;
   onStateChange?: (state: InputState) => void;
   onEnter?: () => void;
+  onArrowUp?: () => void;
+  onArrowDown?: () => void;
   inputMode?: InputMode;
   pattern?: string;
 } & (BaseInputFieldAny | BaseInputFieldNumber);
@@ -94,6 +96,8 @@ const BaseInputField = forwardRef<
     name,
     inputMode: _inputMode,
     defaultValue,
+    onArrowUp,
+    onArrowDown,
     ...props
   },
   ref,
@@ -272,6 +276,18 @@ const BaseInputField = forwardRef<
         event.preventDefault();
         return;
       }
+    }
+
+    if (event.key === 'ArrowUp' && onArrowUp) {
+      onArrowUp();
+      event.preventDefault();
+      return;
+    }
+
+    if (event.key === 'ArrowDown' && onArrowDown) {
+      onArrowDown();
+      event.preventDefault();
+      return;
     }
 
     if (props.type === 'number') {
