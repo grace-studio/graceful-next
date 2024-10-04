@@ -1,7 +1,8 @@
 'use client';
 import Link from 'next/link';
-import React, { FC, PropsWithChildren } from 'react';
+import React, { FC, PropsWithChildren, useRef } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { canElementReceiveFocus } from '../../utils';
 
 export type BaseButtonProps = PropsWithChildren<{
   ariaLabel?: string;
@@ -31,10 +32,14 @@ const BaseButton: FC<BaseButtonProps> = (props) => {
     hotKey = '',
   } = props;
 
+  const ref = useRef<HTMLButtonElement>(null);
+
   useHotkeys(
     hotKey,
     () => {
-      onClick && onClick();
+      if (onClick && ref.current && canElementReceiveFocus(ref.current)) {
+        onClick();
+      }
     },
     { enabled: !!hotKey },
   );
@@ -65,6 +70,7 @@ const BaseButton: FC<BaseButtonProps> = (props) => {
     </Link>
   ) : (
     <button
+      ref={ref}
       onClick={(e) => {
         e.preventDefault();
         onClick && onClick();

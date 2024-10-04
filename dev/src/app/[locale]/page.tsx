@@ -171,6 +171,11 @@ const Home = () => {
         <BaseButton onClick={() => setShow(false)}>Remove</BaseButton>
 
         <div className="mt-10 px-4 py-20 grid grid-cols-4 gap-10 gap-y-40 border-4 border-red-400">
+          <BaseTooltip content="hotkey: E" position="top">
+            <BaseButton hotKey="E" onClick={() => console.log('clicked!')}>
+              hotkey
+            </BaseButton>
+          </BaseTooltip>
           <BaseTooltip content="top" position="top">
             <BaseButton>base</BaseButton>
           </BaseTooltip>
