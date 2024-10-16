@@ -11,6 +11,9 @@ import React, {
 import { FieldError, useFormContext } from 'react-hook-form';
 import { useMicroStore } from '../../hooks/useMicroStore';
 import { FormOptionsContext } from './Form';
+import { toPrecision } from '../../utils';
+
+type Integer = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 
 export type InputState = {
   hasFocus: boolean;
@@ -36,6 +39,7 @@ type BaseInputFieldNumber = {
   max?: number;
   min?: number;
   integer?: boolean;
+  decimals?: Integer;
   onMaxValue?: () => void;
   onMinValue?: () => void;
 };
@@ -129,6 +133,7 @@ const BaseInputField = forwardRef<
   // Set variables for number props, and delete from 'props'
   const decimalPoint = props.type === 'number' ? props.decimalPoint : '.';
   const integer = props.type === 'number' ? props.integer : false;
+  const decimals = props.type === 'number' ? props.decimals : undefined;
   const max = props.type === 'number' ? props.max : undefined;
   const min = props.type === 'number' ? props.min : undefined;
   const onMaxValue = props.type === 'number' ? props.onMaxValue : undefined;
@@ -136,6 +141,7 @@ const BaseInputField = forwardRef<
   if (props.type === 'number') {
     delete props.decimalPoint;
     delete props.integer;
+    delete props.decimals;
     delete props.max;
     delete props.min;
     delete props.onMaxValue;
@@ -207,6 +213,18 @@ const BaseInputField = forwardRef<
     if (max && max > 0 && Number(returnValue) > max) {
       returnValue = max.toString();
       onMaxValue && onMaxValue();
+    }
+
+    // Handle decimals
+    if (
+      decimals &&
+      returnValue &&
+      returnValue !== '-' &&
+      !returnValue.endsWith('.') &&
+      decimals > 0
+    ) {
+      const [first, rest = ''] = returnValue.split('.');
+      returnValue = Number(`${first}.${rest.slice(0, decimals)}`).toString();
     }
 
     // Handle number min value, when character length is equal or greater

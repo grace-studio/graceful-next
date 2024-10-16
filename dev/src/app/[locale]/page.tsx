@@ -295,10 +295,11 @@ const Home = () => {
                     // disabled
                     label="float with min"
                     name="integerMin"
+                    decimals={3}
                     placeholder="Number input test - float"
                     type="number"
-                    decimalPoint="."
-                    min={20}
+                    decimalPoint=","
+                    // min={20}
                     onMinValue={() => {
                       console.log('below min');
                     }}
