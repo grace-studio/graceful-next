@@ -11,7 +11,6 @@ import React, {
 import { FieldError, useFormContext } from 'react-hook-form';
 import { useMicroStore } from '../../hooks/useMicroStore';
 import { FormOptionsContext } from './Form';
-import { toPrecision } from '../../utils';
 
 type Integer = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 
@@ -111,12 +110,14 @@ const BaseInputField = forwardRef<
     setValue,
     formState: { errors },
     setFocus,
+    watch,
   } = useFormContext();
   const [state, dispatch] = useMicroStore({
     ...initialState,
     value: defaultValue ?? '',
   });
   const formOptions = useContext(FormOptionsContext);
+  const currentValue = watch();
 
   let inputMode = _inputMode;
   // Set default input mode
@@ -148,40 +149,8 @@ const BaseInputField = forwardRef<
     delete props.onMinValue;
   }
 
-  useImperativeHandle(ref, () => ({
-    setValue: (value: string) => {
-      setValue(name, value);
-      dispatch({ value });
-    },
-    setFocus: () => {
-      setFocus(name);
-    },
-  }));
-
-  useEffect(() => {
-    const error = errors && (errors[name] as FieldError);
-    state.isTouched && dispatch({ errorMessage: error?.message || '' });
-  }, [errors, name, dispatch, state]);
-
-  useEffect(() => {
-    onStateChange && onStateChange(state);
-  }, [onStateChange, state]);
-
-  const handleOnFocus = (event: FocusEvent<HTMLInputElement>) => {
-    const hasFocus = event.type === 'focus';
-    dispatch({ hasFocus });
-    hasFocus && dispatch({ isTouched: true });
-  };
-
-  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    let newValue: string | number = event.target.value;
-
-    setValue(name, newValue);
-    dispatch({ value: newValue });
-  };
-
-  const handleNumberInput = (value: string) => {
-    let returnValue = value;
+  const formatNumberValue = (value: string) => {
+    let returnValue = String(value);
     // Strip unwanted characters
     returnValue = returnValue.replace(/[^\d\,\.\-]/g, '');
 
@@ -195,6 +164,7 @@ const BaseInputField = forwardRef<
       returnValue = `${first || '0'}.${parts.join('')}`;
     }
 
+    // Add leading zero for negative values
     if (returnValue === '-.') {
       returnValue = '-0.';
     }
@@ -227,20 +197,69 @@ const BaseInputField = forwardRef<
       returnValue = Number(`${first}.${rest.slice(0, decimals)}`).toString();
     }
 
-    // Handle number min value, when character length is equal or greater
-    // if (
-    //   min &&
-    //   String(min).length <= returnValue.length &&
-    //   Number(returnValue) < min
-    // ) {
-    //   returnValue = min.toString();
-    //   onMinValue && onMinValue();
-    // }
-
     // Replace decimal point with preferred one
     returnValue = returnValue.replace(/[\.\,]+/g, dPoint);
 
     return returnValue;
+  };
+
+  const formatValue = (value: string) => {
+    let newValue = value;
+    if ((props.maxLength || 0) > 0) {
+      newValue = newValue.slice(0, props.maxLength);
+    }
+
+    if (props.type === 'number') {
+      newValue = formatNumberValue(newValue);
+    }
+
+    return newValue;
+  };
+
+  useImperativeHandle(ref, () => ({
+    setValue: (value: string) => {
+      setValue(name, value);
+      dispatch({ value });
+    },
+    setFocus: () => {
+      setFocus(name);
+    },
+  }));
+
+  useEffect(() => {
+    const value = currentValue[name];
+    const stateValue = state.value;
+    if (value && value !== stateValue) {
+      const newValue = formatValue(value);
+      setValue(name, newValue);
+      dispatch({ value: newValue });
+    } else if (stateValue && value !== stateValue) {
+      const newValue = formatValue(stateValue);
+      setValue(name, newValue);
+      dispatch({ value: newValue });
+    }
+  }, [currentValue]);
+
+  useEffect(() => {
+    const error = errors && (errors[name] as FieldError);
+    state.isTouched && dispatch({ errorMessage: error?.message || '' });
+  }, [errors, name, dispatch, state]);
+
+  useEffect(() => {
+    onStateChange && onStateChange(state);
+  }, [onStateChange, state]);
+
+  const handleOnFocus = (event: FocusEvent<HTMLInputElement>) => {
+    const hasFocus = event.type === 'focus';
+    dispatch({ hasFocus });
+    hasFocus && dispatch({ isTouched: true });
+  };
+
+  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
+    let newValue: string | number = event.target.value;
+
+    setValue(name, newValue);
+    dispatch({ value: newValue });
   };
 
   const handleOnBlur = (event: FocusEvent<HTMLInputElement>) => {
@@ -269,14 +288,8 @@ const BaseInputField = forwardRef<
   };
 
   const handleOnInput = (event: any) => {
-    const elem = event.target as any;
-    if ((elem.maxLength || 0) > 0) {
-      elem.value = elem.value.slice(0, elem.maxLength);
-    }
-
-    if (props.type === 'number') {
-      elem.value = handleNumberInput(elem.value);
-    }
+    const elem = event.target;
+    elem.value = formatValue(elem.value);
   };
 
   const handleOnKeyDown = (event: any) => {

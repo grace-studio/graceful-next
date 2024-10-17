@@ -42,7 +42,7 @@ const selectOptions = [
 
 const Home = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [activeTrap, setActiveTrap] = useState(1);
+  const [activeTrap, setActiveTrap] = useState(2);
   const [show, setShow] = useState(true);
   useSetClassOnTab('tabbing', 'body');
 
@@ -225,7 +225,7 @@ const Home = () => {
           preventSubmitOnEnter
           onSubmit={(value) => console.log(value)}
           onValuesChange={console.log}
-          defaultValues={{ radio: 'val2' }}
+          defaultValues={{ radio: 'val2', integerMin2: 123.1234567 }}
         >
           <div className="mt-10 grid gap-10 grid-cols-2">
             <FocusTrap mode="combined" active={activeTrap === 1}>
@@ -295,6 +295,22 @@ const Home = () => {
                     // disabled
                     label="float with min"
                     name="integerMin"
+                    defaultValue={321.321321}
+                    decimals={3}
+                    placeholder="Number input test - float"
+                    type="number"
+                    decimalPoint=","
+                    // min={20}
+                    onMinValue={() => {
+                      console.log('below min');
+                    }}
+                    // max={300}
+                    inputMode="decimal"
+                  />
+                  <BaseInputField
+                    // disabled
+                    label="float with min"
+                    name="integerMin2"
                     decimals={3}
                     placeholder="Number input test - float"
                     type="number"
