@@ -6,6 +6,7 @@ export type {
 } from './BaseInputField';
 
 export { default as BaseFileUploader } from './BaseFileUploader';
+export { default as BaseHiddenField } from './BaseHiddenField';
 export { default as BaseInputFile } from './BaseInputFile';
 export type {
   FileInputState,

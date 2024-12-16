@@ -15,6 +15,7 @@ import {
   FocusTrap,
   BaseFileUploader,
   BaseTooltip,
+  BaseHiddenField,
 } from '@grace-studio/graceful-next/components';
 import { useSetClassOnTab } from '@grace-studio/graceful-next/hooks';
 import { useLocale } from 'next-intl';
@@ -277,6 +278,7 @@ const Home = () => {
                     activeTrap === 2 ? 'border-red-400' : 'border-gray-300'
                   }`}
                 >
+                  <BaseHiddenField name="hidden" defaultValue="something" />
                   <BaseInputField
                     integer
                     label="int with max"
