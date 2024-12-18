@@ -281,6 +281,14 @@ const Home = () => {
                   <BaseHiddenField name="hidden" defaultValue="something" />
                   <BaseInputField
                     integer
+                    type="number"
+                    label="Number input with transform"
+                    name="integerTransform"
+                    placeholder="Number input with transform"
+                    valueTransform={(value) => Math.floor(value / 2) * 2}
+                  />
+                  <BaseInputField
+                    integer
                     label="int with max"
                     name="integerMax"
                     placeholder="Number input test - integer"

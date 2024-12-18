@@ -39,6 +39,7 @@ type BaseInputFieldNumber = {
   min?: number;
   integer?: boolean;
   decimals?: Integer;
+  valueTransform?: (value: number) => number;
   onMaxValue?: () => void;
   onMinValue?: () => void;
 };
@@ -137,6 +138,8 @@ const BaseInputField = forwardRef<
   const decimals = props.type === 'number' ? props.decimals : undefined;
   const max = props.type === 'number' ? props.max : undefined;
   const min = props.type === 'number' ? props.min : undefined;
+  const valueTransform =
+    props.type === 'number' ? props.valueTransform : undefined;
   const onMaxValue = props.type === 'number' ? props.onMaxValue : undefined;
   const onMinValue = props.type === 'number' ? props.onMinValue : undefined;
   if (props.type === 'number') {
@@ -145,6 +148,7 @@ const BaseInputField = forwardRef<
     delete props.decimals;
     delete props.max;
     delete props.min;
+    delete props.valueTransform;
     delete props.onMaxValue;
     delete props.onMinValue;
   }
@@ -280,6 +284,10 @@ const BaseInputField = forwardRef<
       if (elem.value && max && max <= 0 && Number(elem.value) >= max) {
         elem.value = max.toString();
         onMaxValue && onMaxValue();
+      }
+
+      if (valueTransform && elem.value) {
+        elem.value = valueTransform(Number(elem.value)).toString();
       }
     }
 
