@@ -73,17 +73,20 @@ const BaseAccordion = ({
       }
 
       if (child.type === BaseAccordionTitle) {
+        if (typeof child.props !== 'object' || child.props === null) return;
         dispatch({
           titleClassName:
-            child.props.className ??
+            (child.props as { className?: string }).className ??
             'p-4 text-lg text-left hover:bg-gray-300 \
             outline outline-4 outline-transparent focus-within:outline-fuchsia-600',
         });
         setTitle(child);
       } else if (child.type === BaseAccordionContent) {
+        if (typeof child.props !== 'object' || child.props === null) return;
         dispatch({
           contentClassName:
-            child.props.className ?? 'p-4 text-lg border-t-2 border-gray-300',
+            (child.props as { className?: string }).className ??
+            'p-4 text-lg border-t-2 border-gray-300',
         });
         setContent(child);
       }

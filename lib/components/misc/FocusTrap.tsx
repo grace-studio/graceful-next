@@ -176,7 +176,7 @@ const FocusTrap = ({ children, active, mode, ...props }: FocusTrapProps) => {
     }, []);
   }
 
-  return cloneElement(children, { ref: elementRef });
+  return cloneElement(children as ReactElement<any>, { ref: elementRef }); //Any viable here? When I tried typing it as HTMLelement i got error.
 };
 
 export default FocusTrap;
