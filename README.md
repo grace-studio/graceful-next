@@ -38,16 +38,7 @@ module.exports = {
 ## Components
 
 - [`BaseButton`](#basebutton)
-- [`BaseContentWrapper`](#basecontentwrapper)
-- [`IconWrapper`](#iconwrapper)
-- [`Metadata`](#metadata)
-- [`BaseAccordion`](#baseaccordion)
-- [`BaseInputField`](#baseinputfield)
-- [`BaseRadioButton`](#baseradiobutton)
-- [`Drawer`](#drawer)
-- [`DynamicZone`](#dynamiczone)
-- [`Form`](#form)
-- [`ReactPortal`](#reactportal)
+- [`StrapiDynamicZone`](#strapidynamiczone)
 
 ### `BaseButton`
 
@@ -76,25 +67,56 @@ return (
 
 ```
 
-### `BaseContentWrapper`
+### `StrapiDynamicZone`
 
-### `IconWrapper`
+The `StrapiDynamicZone` component is a dynamic rendering utility for Strapi CMS blocks in a Next.js application. It leverages a mapping of block types to React components and dynamically renders the appropriate component based on the block's `__typename`.
 
-### `Metadata`
+**Example Implementation**
 
-### `BaseAccordion`
+```tsx
+import {
+  StrapiDynamicZone,
+  StrapiDynamicZoneProps,
+} from '@grace-studio/graceful-next/components';
+import dynamic from 'next/dynamic';
 
-### `BaseInputField`
+// Define the block-to-component mapping
+export const blockMapping = {
+  'test-1': dynamic(() => import('@/components/blocks/Test1')),
+  test2: dynamic(() => import('@/components/blocks/Test2')),
+};
 
-### `BaseRadioButton`
+// Define the blocks to render
+// This data will come from Strapi
+const strapiBlocks: StrapiDynamicZoneProps['blocks'] = [
+  { __typename: 'test-1', someProp: 'hej' },
+  { __typename: 'this-will-not-match', someProp: 'hej' },
+  { __typename: 'test2', someProp: 'hej', anotherProp: 'blaha' },
+  { __typename: 'test-1', someProp: 'hej' },
+];
 
-### `Drawer`
+const BlocksPage = () => (
+  <div className="p-6 grid gap-4">
+    <StrapiDynamicZone blockMapping={blockMapping} blocks={strapiBlocks} />
+  </div>
+);
 
-### `DynamicZone`
+export default BlocksPage;
+```
 
-### `Form`
+**Props**
+| Name | Type | Description |
+|---------------|----------------------------------------------------|-----------------------------------------------------------------------------|
+| `blockMapping`| `Record<string, ComponentType>` | A mapping of block types to dynamically imported React components. |
+| `blocks` | `({__typename: string} & Record<string, any>)[]` | An array of blocks to render. Each block must include a `__typename`. |
+| `elementType` | `HTMLElementType` _(optional)_ | Specifies the HTML element type to use as the wrapper. Defaults to `section`. |
 
-### `ReactPortal`
+---
+
+**Notes**
+
+- If a block's `__typename` does not exist in `blockMapping`, it will not render.
+- `elementType` allows you to specify a custom wrapper element (e.g., `div`, `article`).
 
 <!-- ## HOOKS ## -->
 

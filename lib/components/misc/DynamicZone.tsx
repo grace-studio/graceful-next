@@ -1,29 +1,45 @@
-import { NextArray } from '../../types';
-import { FC } from 'react';
-import React from 'react';
+'use server';
+import React, { ComponentType, ElementType, FC, HTMLElementType } from 'react';
+import { randomUUID } from 'crypto';
 
-export type DynamicZoneProps = object & {
-  blocks: NextArray<object & { blockName: string }>;
-  blockDefinition: Record<string, any>;
+export type DynamicZoneProps<T extends {}> = {
+  blockMapping: Record<string, ComponentType>;
+  blocks: (T & Record<string, any>)[];
+  elementType?: HTMLElementType;
 };
 
-const DynamicZone: FC<DynamicZoneProps> = ({
-  blocks = [],
-  blockDefinition,
-  ...props
-}) => (
-  <>
-    {blocks.map((block) => {
-      const name = block.blockName as keyof typeof blockDefinition;
-      const ImportedModule = blockDefinition[name];
+type DynamicZoneInternalProps = DynamicZoneProps<{}> & { blockKeyName: string };
 
-      return ImportedModule ? (
-        <div key={block._key} data-component-name={name}>
-          <ImportedModule block={block} {...props} />
-        </div>
-      ) : null;
-    })}
-  </>
-);
+const DynamicZone: FC<DynamicZoneInternalProps> = ({
+  blockKeyName,
+  blockMapping = {},
+  blocks = [],
+  elementType = 'section',
+}) => {
+  const Elem = elementType as ElementType;
+
+  return (
+    <>
+      {blocks.map((props) => {
+        const { [blockKeyName]: __typename, ...blockProps } = props;
+        const ImportedModule = blockMapping[__typename];
+
+        if (!ImportedModule) {
+          console.log(
+            `DynamicZone: Block with name "${__typename}" not found.`,
+          );
+
+          return null;
+        }
+
+        return (
+          <Elem key={randomUUID()} data-block-name={__typename}>
+            <ImportedModule {...blockProps} />
+          </Elem>
+        );
+      })}
+    </>
+  );
+};
 
 export default DynamicZone;
