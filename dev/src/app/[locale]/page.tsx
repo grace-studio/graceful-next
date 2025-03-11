@@ -16,6 +16,7 @@ import {
   BaseFileUploader,
   BaseTooltip,
   BaseHiddenField,
+  BaseInputRange,
 } from '@grace-studio/graceful-next/components';
 import { useSetClassOnTab } from '@grace-studio/graceful-next/hooks';
 import { useLocale } from 'next-intl';
@@ -226,7 +227,11 @@ const Home = () => {
           preventSubmitOnEnter
           onSubmit={(value) => console.log(value)}
           onValuesChange={console.log}
-          defaultValues={{ radio: 'val2', integerMin2: 123.1234567 }}
+          defaultValues={{
+            radio: 'val2',
+            integerMin2: 123.1234567,
+            range: 0.2,
+          }}
         >
           <div className="mt-10 grid gap-10 grid-cols-2">
             <FocusTrap mode="combined" active={activeTrap === 1}>
@@ -279,6 +284,14 @@ const Home = () => {
                   }`}
                 >
                   <BaseHiddenField name="hidden" defaultValue="something" />
+
+                  <BaseInputRange
+                    label="RANGE"
+                    name="range"
+                    step={0.01}
+                    min={0}
+                    max={1}
+                  />
                   <BaseInputField
                     integer
                     type="number"

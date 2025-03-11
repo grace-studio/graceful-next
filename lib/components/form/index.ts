@@ -5,6 +5,13 @@ export type {
   BaseInputFieldRef,
 } from './BaseInputField';
 
+export { default as BaseInputRange } from './BaseInputRange';
+export type {
+  // InputState,
+  BaseInputRangeProps,
+  BaseInputRangeRef,
+} from './BaseInputRange';
+
 export { default as BaseFileUploader } from './BaseFileUploader';
 export { default as BaseHiddenField } from './BaseHiddenField';
 export { default as BaseInputFile } from './BaseInputFile';
