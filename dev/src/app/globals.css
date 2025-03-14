@@ -6,6 +6,74 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 210, 255, 255;
   --background-end-rgb: 255, 210, 255;
+
+  --header-bg: #bbd695;
+  --header-color: #201e1e;
+
+  /* --button-primary-bg: #333; */
+  /* --button-primary-bg: @theme ('colors.yo'); */
+  --button-primary-text: #f3f3f3;
+  --button-primary-bg--hover: #888;
+  --button-primary-text--hover: #f3f3f3;
+  --button-primary-bg--disabled: #c3c0c0;
+  --button-primary-text--disabled: #f3f3f3;
+
+  --button-secondary-bg: #33333300;
+  --button-secondary-text: #333;
+  --button-secondary-bg--hover: #f3f3f3;
+  --button-secondary-text--hover: #333;
+  --button-secondary-bg--disabled: #c3c0c0;
+  --button-secondary-text--disabled: #f3f3f3;
+
+  --button-tertiary-bg: #b44d0d;
+  --button-tertiary-text: #f3f3f3;
+  --button-tertiary-bg--hover: #cc7d16;
+  --button-tertiary-text--hover: #f3f3f3;
+  --button-tertiary-bg--disabled: #c3c0c0;
+  --button-tertiary-text--disabled: #f3f3f3;
+}
+
+[data-page-theme] a {
+  color: inherit;
+}
+
+:root {
+  .theme-dark {
+    --header-bg: #333;
+    --header-color: #f3f3f3;
+
+    --button-primary-bg: #f3f3f3;
+    --button-primary-text: #333;
+
+    --button-secondary-bg: #ffffff00;
+    --button-secondary-text: #f3f3f3;
+
+    --surface-primary: black;
+    --on-surface-primary: white;
+  }
+  .theme-light {
+    --header-bg: #f3f3f3;
+    --header-color: #333;
+  }
+
+  [data-block-theme='transparent'] {
+    --header-bg: #f3f3f300;
+    --header-color: #ffffff;
+  }
+
+  [data-page-theme='dark'] {
+    --header-bg: #333;
+    --header-color: #f3f3f3;
+  }
+  [data-page-theme='light'] {
+    --header-bg: #f3f3f3;
+    --header-color: #333;
+  }
+
+  [data-block-theme='light'] {
+    --surface-primary: white;
+    --on-surface-primary: black;
+  }
 }
 
 body {
@@ -22,5 +90,28 @@ body {
 @layer base {
   .tabbing .focus-active {
     @apply outline outline-4 outline-offset-2 outline-transparent focus-within:outline-fuchsia-600;
+  }
+
+  .theme-header {
+    @apply bg-[var(--header-bg)] text-[var(--header-color)];
+  }
+
+  .theme-loaded .theme-header {
+    @apply transition-all duration-300;
+  }
+
+  [data-page-theme] > *:not([class*='header']) {
+    @apply transition-all ease-bezier duration-500;
+  }
+  [data-page-transition='true'] > *:not([class*='header']) {
+    @apply transition-all ease-bezier opacity-[0] duration-500 -translate-y-10  origin-top;
+  }
+
+  [data-page-transition='true'] > *:not([class*='header']) h1,
+  h2,
+  h3,
+  h4,
+  p {
+    @apply transition-all ease-in  duration-300 opacity-[0];
   }
 }
