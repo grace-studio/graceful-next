@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@layer theme, base, components, utilities;
+@source '../../../lib/**/*.tsx';
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -101,10 +101,10 @@ body {
   }
 
   [data-page-theme] > *:not([class*='header']) {
-    @apply transition-all ease-bezier duration-500;
+    @apply transition-all duration-500;
   }
   [data-page-transition='true'] > *:not([class*='header']) {
-    @apply transition-all ease-bezier opacity-[0] duration-500 -translate-y-10  origin-top;
+    @apply transition-all opacity-[0] duration-500 -translate-y-10  origin-top;
   }
 
   [data-page-transition='true'] > *:not([class*='header']) h1,
@@ -112,6 +112,6 @@ body {
   h3,
   h4,
   p {
-    @apply transition-all ease-in  duration-300 opacity-[0];
+    @apply transition-all ease-in duration-300 opacity-[0];
   }
 }

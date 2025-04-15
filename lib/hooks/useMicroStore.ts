@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 export const useMicroStore = <T extends object>(
-  initialState: T
+  initialState: T,
 ): [T, typeof dispatch] => {
   const [state, setState] = useState<T>(initialState);
   const fastState = useRef<{ micro: object }>({ micro: {} });
@@ -22,7 +22,7 @@ export const useMicroStore = <T extends object>(
       fastState.current.micro = { ...newState };
       setState(newState);
     },
-    [state]
+    [state],
   );
 
   return [state, dispatch];

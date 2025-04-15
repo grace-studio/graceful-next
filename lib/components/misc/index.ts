@@ -12,8 +12,8 @@ export { default as GTMInitialize } from './GTMInitialize';
 
 export { default as SetClassOnTab } from './SetClassOnTab';
 
-export { default as StrapiDynamicZone } from './StrapiDynamicZone';
-export type { StrapiDynamicZoneProps } from './StrapiDynamicZone';
+export { default as StrapiDynamicZone } from './DynamicZone/StrapiDynamicZone';
+export type { StrapiDynamicZoneProps } from './DynamicZone/StrapiDynamicZone';
 
-export { default as UmbracoDynamicZone } from './UmbracoDynamicZone';
-export type { UmbracoDynamicZoneProps } from './UmbracoDynamicZone';
+export { default as UmbracoDynamicZone } from './DynamicZone/UmbracoDynamicZone';
+export type { UmbracoDynamicZoneProps } from './DynamicZone/UmbracoDynamicZone';

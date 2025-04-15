@@ -6,14 +6,16 @@ export type {
 } from './BaseInputField';
 
 export { default as BaseInputRange } from './BaseInputRange';
-export type {
-  // InputState,
-  BaseInputRangeProps,
-  BaseInputRangeRef,
-} from './BaseInputRange';
+export type { BaseInputRangeProps, BaseInputRangeRef } from './BaseInputRange';
 
 export { default as BaseFileUploader } from './BaseFileUploader';
+
 export { default as BaseHiddenField } from './BaseHiddenField';
+export type {
+  BaseHiddenFieldProps,
+  BaseHiddenFieldRef,
+} from './BaseHiddenField';
+
 export { default as BaseInputFile } from './BaseInputFile';
 export type {
   FileInputState,
