@@ -11,6 +11,8 @@ const modals = {
   LoadingTest,
 };
 
-const { ModalViewerProvider, useModal } = setupModalViewer(modals);
+const { ModalViewerProvider, useModal } = setupModalViewer(modals, {
+  transition: 'fade',
+});
 
 export { ModalViewerProvider, useModal };

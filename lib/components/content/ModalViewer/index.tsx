@@ -128,19 +128,24 @@ const useModal = <TDefinition extends ModalMapping>() => {
   };
 };
 
-export const setupModalViewer = <T extends ModalMapping>(modalMapping: T) => ({
+export const setupModalViewer = <T extends ModalMapping>(
+  modalMapping: T,
+  modalViewerProps: Omit<ModalViewerProps, 'modalMapping'> = {},
+) => ({
   useModal: useModal<typeof modalMapping>,
   ModalViewerProvider: ({
     children,
     ...props
   }: {
     children: ReactNode;
-    unmountDelay?: number;
-    loadingFallback?: ReactNode;
-  } & DrawerProps) => (
+  } & Omit<ModalViewerProps, 'modalMapping'>) => (
     <ModalProvider>
       {children}
-      <ModalViewer modalMapping={modalMapping} {...props} />
+      <ModalViewer
+        modalMapping={modalMapping}
+        {...modalViewerProps}
+        {...props}
+      />
     </ModalProvider>
   ),
 });
