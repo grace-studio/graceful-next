@@ -1,4 +1,4 @@
-export { default as ReactPortal } from './ReactPortal';
+export { default as ReactContentPortal } from './ReactContentPortal';
 
 export { default as FocusTrap } from './FocusTrap';
 

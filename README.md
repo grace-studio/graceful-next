@@ -47,7 +47,7 @@ module.exports = {
 - [`Drawer`](#drawer)
 - [`DynamicZone`](#dynamiczone)
 - [`Form`](#form)
-- [`ReactPortal`](#reactportal)
+- [`ReactContentPortal`](#ReactContentPortal)
 
 ### `BaseButton`
 
@@ -94,7 +94,7 @@ return (
 
 ### `Form`
 
-### `ReactPortal`
+### `ReactContentPortal`
 
 <!-- ## HOOKS ## -->
 

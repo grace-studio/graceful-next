@@ -2,11 +2,11 @@
 import { createPortal } from 'react-dom';
 import { FC, PropsWithChildren, useEffect, useState } from 'react';
 
-type ReactPortalProps = PropsWithChildren<{
+type ReactContentPortalProps = PropsWithChildren<{
   portalQuerySelector: string;
 }>;
 
-const ReactPortal: FC<ReactPortalProps> = ({
+const ReactContentPortal: FC<ReactContentPortalProps> = ({
   children,
   portalQuerySelector,
 }) => {
@@ -26,4 +26,4 @@ const ReactPortal: FC<ReactPortalProps> = ({
     : null;
 };
 
-export default ReactPortal;
+export default ReactContentPortal;

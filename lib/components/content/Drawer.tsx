@@ -1,6 +1,6 @@
 'use client';
 import classNames from 'classnames';
-import { ReactPortal } from '..';
+import { ReactContentPortal } from '..';
 import React, { FC, PropsWithChildren, useCallback } from 'react';
 import { usePreventBodyScroll } from '../../hooks';
 import { useHotkeys } from 'react-hotkeys-hook';
@@ -106,7 +106,7 @@ const Drawer: FC<DrawerProps> = (props) => {
 
   return (
     <>
-      <ReactPortal portalQuerySelector="body">
+      <ReactContentPortal portalQuerySelector="body">
         {!disableBackdrop && (
           <div
             className={backdropClasses}
@@ -117,7 +117,7 @@ const Drawer: FC<DrawerProps> = (props) => {
           />
         )}
         <div className={drawerClasses}>{children}</div>
-      </ReactPortal>
+      </ReactContentPortal>
     </>
   );
 };
