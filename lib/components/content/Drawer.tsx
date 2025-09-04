@@ -107,16 +107,18 @@ const Drawer: FC<DrawerProps> = (props) => {
   return (
     <>
       <ReactContentPortal portalQuerySelector="body">
-        {!disableBackdrop && (
-          <div
-            className={backdropClasses}
-            onClick={() => handleOnClose()}
-            role="button"
-            aria-label="Close"
-            tabIndex={-1}
-          />
-        )}
-        <div className={drawerClasses}>{children}</div>
+        <>
+          {!disableBackdrop && (
+            <div
+              className={backdropClasses}
+              onClick={() => handleOnClose()}
+              role="button"
+              aria-label="Close"
+              tabIndex={-1}
+            />
+          )}
+          <div className={drawerClasses}>{children}</div>
+        </>
       </ReactContentPortal>
     </>
   );
