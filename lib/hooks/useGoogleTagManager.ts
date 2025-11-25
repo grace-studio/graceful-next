@@ -5,7 +5,7 @@ import TagManager, { TagManagerArgs } from 'react-gtm-module';
 type GTMEventData = object;
 
 declare global {
-  // eslint-disable-next-line no-unused-vars
+   
   interface Window {
     dataLayer?: GTMEventData[];
   }

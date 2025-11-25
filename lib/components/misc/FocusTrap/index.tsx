@@ -19,7 +19,6 @@ type FocusTrapProps = {
 } & (FocusTrapSolo | FocusTrapCombined);
 
 declare global {
-  // eslint-disable-next-line no-unused-vars
   interface Window {
     __gracefulTrapElementRefs?: any[];
     __gracefulTrap?: focusTrap.FocusTrap;
@@ -135,14 +134,18 @@ const FocusTrap = ({ children, active, mode, ...props }: FocusTrapProps) => {
   }, []);
 
   // Solo mode, only one focus trap active
-  if (mode === 'solo') {
-    useEffect(() => {
+
+  useEffect(() => {
+    if (mode === 'solo') {
       if (elementRef.current) {
         setTrap(focusTrap.createFocusTrap(elementRef.current, options));
       }
-    }, [elementRef.current]);
+    }
+    // eslint-disable-next-line react-hooks/refs
+  }, [elementRef.current]);
 
-    useEffect(() => {
+  useEffect(() => {
+    if (mode === 'solo') {
       if (elementRef.current && trap) {
         if (active) {
           trap.activate();
@@ -150,33 +153,38 @@ const FocusTrap = ({ children, active, mode, ...props }: FocusTrapProps) => {
           trap.deactivate();
         }
       }
-    }, [active]);
+    }
+  }, [active]);
 
-    // Combined mode, multiple focus trap areas to act as one
-  } else if (mode === 'combined') {
-    useEffect(() => {
+  // Combined mode, multiple focus trap areas to act as one
+
+  useEffect(() => {
+    if (mode === 'combined') {
       if (active) {
         registerRef(elementRef.current);
       } else {
         unRegisterRef(elementRef.current);
       }
       updateTrap();
-    }, [active]);
+    }
+  }, [active]);
 
-    useEffect(() => {
+  useEffect(() => {
+    if (mode === 'combined') {
       const noInit = (props as FocusTrapCombined).noInitialFocus;
       setNoInitOnChildren(elementRef.current, !!noInit);
-    }, [props]);
+    }
+  }, [props]);
 
-    useEffect(() => {
-      return () => {
-        unRegisterRef(elementRef.current);
-        updateTrap();
-      };
-    }, []);
-  }
+  useEffect(() => {
+    return () => {
+      unRegisterRef(elementRef.current);
+      updateTrap();
+    };
+  }, []);
 
-  return cloneElement(children as ReactElement<any>, { ref: elementRef }); //Any viable here? When I tried typing it as HTMLelement i got error.
+  // eslint-disable-next-line react-hooks/refs
+  return cloneElement(children as ReactElement<any>, { ref: elementRef });
 };
 
 export default FocusTrap;
