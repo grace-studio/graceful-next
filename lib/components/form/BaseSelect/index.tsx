@@ -108,7 +108,7 @@ const BaseSelect = forwardRef<BaseSelectRef, BaseSelectProps & InternalProps>(
     };
 
     const handleOnChange = (event: ChangeEvent<HTMLSelectElement>) => {
-      let newValue: string | number = event.target.value;
+      const newValue: string | number = event.target.value;
 
       setValue(name, newValue);
       dispatch({ value: newValue });

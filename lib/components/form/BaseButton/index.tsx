@@ -23,7 +23,7 @@ const BaseButton: FC<BaseButtonProps> = (props) => {
     children,
     className = 'h-16 px-10 bg-gray-900 disabled:bg-gray-700 disabled:text-gray-300 text-gray-100 \
     hover:bg-links-hover whitespace-nowrap text-lg flex items-center justify-center \
-    outline outline-4 outline-offset-2 outline-transparent focus-within:outline-fuchsia-600',
+    outline-4 outline-offset-2 outline-transparent focus-within:outline-fuchsia-600',
     disabled,
     onClick,
     target,
@@ -73,7 +73,7 @@ const BaseButton: FC<BaseButtonProps> = (props) => {
       ref={ref}
       onClick={(e) => {
         e.preventDefault();
-        onClick && onClick();
+        onClick?.();
       }}
       {...buttonProps}
     >

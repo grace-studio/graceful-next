@@ -70,11 +70,7 @@ const BaseFileUploader: FC<BaseFileUploaderType> = ({
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [localStates, setLocalStates] = useState<
     Record<string, string | boolean>
-  >({
-    dragOver: false,
-    dragDrop: false,
-    mouseOver: false,
-  });
+  >({ dragOver: false, dragDrop: false, mouseOver: false });
 
   const standardClasses = {
     area: 'transition-all',
@@ -137,7 +133,7 @@ const BaseFileUploader: FC<BaseFileUploaderType> = ({
     return fileMatches.length > 0;
   };
   const isFileTooLarge = ({ size }: File) => {
-    return size > options?.maxSize!;
+    return size > options?.maxSize;
   };
   const isFileInBlacklist = ({ type }: File) => {
     const mimeType = mime.extension(type);
@@ -167,7 +163,7 @@ const BaseFileUploader: FC<BaseFileUploaderType> = ({
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
-    const newFiles = arrayFromFileList(e.target?.files!);
+    const newFiles = e.target.files ? arrayFromFileList(e.target?.files) : [];
     uploadFiles(newFiles);
   }
 
@@ -187,7 +183,7 @@ const BaseFileUploader: FC<BaseFileUploaderType> = ({
       blacklist: inBlacklist.map(({ name }) => name),
     };
 
-    let messageList = [] as string[];
+    const messageList = [] as string[];
 
     // Add messages for eventual errors
     if (inBlacklist.length > 0) {

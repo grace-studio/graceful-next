@@ -1,4 +1,9 @@
-export { default as defaultLocale } from './lang/sv.json';
+import { createGetTranslations } from '@grace-studio/graceful-next/translations';
+import * as translations from './lang';
 
-export { default as sv } from './lang/sv.json';
-export { default as en } from './lang/en.json';
+export const getTranslation = createGetTranslations(
+  translations.defaultLocale,
+  translations,
+);
+
+export type Translations = ReturnType<typeof getTranslation>;

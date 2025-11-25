@@ -2,13 +2,15 @@
 import React, { ComponentType, ElementType, FC, HTMLElementType } from 'react';
 import { randomUUID } from 'crypto';
 
-export type DynamicZoneProps<T extends {}> = {
+export type DynamicZoneProps<T extends object> = {
   blockMapping: Record<string, ComponentType>;
   blocks: (T & Record<string, any>)[];
   elementType?: HTMLElementType;
 };
 
-type DynamicZoneInternalProps = DynamicZoneProps<{}> & { blockKeyName: string };
+type DynamicZoneInternalProps = DynamicZoneProps<object> & {
+  blockKeyName: string;
+};
 
 const DynamicZone: FC<DynamicZoneInternalProps> = ({
   blockKeyName,
@@ -16,7 +18,7 @@ const DynamicZone: FC<DynamicZoneInternalProps> = ({
   blocks = [],
   elementType = 'section',
 }) => {
-  const Elem = elementType as ElementType;
+  const Elem = elementType as HTMLElementType;
 
   return (
     <>

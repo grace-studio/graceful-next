@@ -29,10 +29,7 @@ type AccordionState = {
   contentClassName?: string;
 };
 
-const initialState: AccordionState = {
-  isOpen: false,
-  contentStyle: {},
-};
+const initialState: AccordionState = { isOpen: false, contentStyle: {} };
 
 type BaseAccordionProps = PropsWithChildren<{
   initiallyOpen?: boolean;
@@ -63,7 +60,7 @@ const BaseAccordion = ({
       },
     });
 
-    onStateChange && onStateChange(state);
+    onStateChange?.(state);
   }, [dispatch, onStateChange, state]);
 
   useEffect(() => {
@@ -113,7 +110,10 @@ const BaseAccordion = ({
       >
         {title}
       </button>
-      <div style={state.contentStyle as any} className={transitionClasses}>
+      <div
+        style={state.contentStyle as React.CSSProperties}
+        className={transitionClasses}
+      >
         <div ref={ref} className={contentClasses}>
           {content}
         </div>

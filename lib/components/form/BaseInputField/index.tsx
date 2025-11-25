@@ -260,7 +260,7 @@ const BaseInputField = forwardRef<
   };
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    let newValue: string | number = event.target.value;
+    const newValue: string | number = event.target.value;
 
     setValue(name, newValue);
     dispatch({ value: newValue });

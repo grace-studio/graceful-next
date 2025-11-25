@@ -1,3 +1,5 @@
+'use client';
+
 import { useCallback, useEffect } from 'react';
 
 /**
@@ -7,10 +9,6 @@ export const useSetClassOnTab = (
   className: string,
   element: string | HTMLElement | SVGElement | null,
 ) => {
-  if (typeof document === 'undefined' || typeof window === 'undefined') {
-    return;
-  }
-
   const getElem = useCallback((): Element | SVGElement | null => {
     if (typeof element === 'string') {
       return document.querySelector(element);

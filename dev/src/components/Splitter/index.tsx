@@ -28,7 +28,7 @@ const Splitter: FC<SplitterType> = ({ content }) => {
     document.body.style.cursor = 'ew-resize';
   };
 
-  const onMouseMove = (e: MouseEvent) => {
+  const onMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (
       !dragging ||
       !leftRef.current ||

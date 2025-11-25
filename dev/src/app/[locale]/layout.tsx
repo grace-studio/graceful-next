@@ -1,4 +1,6 @@
-import { NextIntlClientProvider } from 'next-intl';
+import { NextIntlClientProvider, hasLocale } from 'next-intl';
+import { notFound } from 'next/navigation';
+import { routing } from '@/i18n/routing';
 import '../globals.css';
 import { Inter } from 'next/font/google';
 import { GTMInitialize } from '@grace-studio/graceful-next/components';
@@ -17,13 +19,17 @@ const Layout = async ({
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 }) => {
-  const locale = (await params).locale;
+  const { locale } = await params;
+
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
 
   return (
     <html lang="en">
       <GTMInitialize id={process.env.NEXT_PUBLIC_GTM_ID} />
       <body className={inter.className}>
-        <NextIntlClientProvider locale={locale}>
+        <NextIntlClientProvider messages={null}>
           {children}
         </NextIntlClientProvider>
       </body>

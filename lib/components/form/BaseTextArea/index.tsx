@@ -102,7 +102,7 @@ const BaseTextArea = forwardRef<
   };
 
   const handleOnChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    let newValue: string | number = event.target.value;
+    const newValue: string | number = event.target.value;
     setValue(name, newValue);
     dispatch({ value: newValue });
   };

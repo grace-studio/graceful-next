@@ -8,6 +8,7 @@ export const useThemeLoader = (themeName = 'graceful-theme') => {
 
   useEffect(() => {
     const loadedTheme = loadFromSessionStorage(themeName) as string;
+
     setTheme(loadedTheme);
   }, [path]);
 

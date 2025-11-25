@@ -1,25 +1,25 @@
 'use client';
 import { createPortal } from 'react-dom';
-import { FC, PropsWithChildren, useEffect, useState } from 'react';
+import { FC } from 'react';
+import { useIsClient } from '../../../hooks/useIsClient';
 
-type ReactPortalProps = PropsWithChildren<{
-  portalQuerySelector?: string;
-}>;
+type ReactPortalProps = {
+  portalQuerySelector: string;
+  children: React.ReactNode;
+};
 
 const ReactPortal: FC<ReactPortalProps> = ({
   children,
-  portalQuerySelector = 'body',
+  portalQuerySelector,
 }) => {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  const isClient = useIsClient();
 
-  return mounted
-    ? createPortal(
-        children,
+  return isClient
+    ? (createPortal(
+        children as any, // Temporary fix for error in Next 13.4.0?
         document.querySelector(portalQuerySelector) as Element,
-      )
+      ) as React.ReactElement)
     : null;
 };
 
 export default ReactPortal;
-export type { ReactPortalProps };

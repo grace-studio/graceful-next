@@ -43,7 +43,7 @@ export type BaseInputFileProps = {
   fileNamesPlacement?: 'inside' | 'below';
 };
 
-export type BaseInputFileRef = {};
+export type BaseInputFileRef = object;
 
 type InternalProps = {
   className?: string;
