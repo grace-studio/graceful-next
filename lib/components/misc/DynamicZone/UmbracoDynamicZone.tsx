@@ -4,7 +4,7 @@ import DynamicZone, { DynamicZoneProps } from '.';
 
 export type UmbracoDynamicZoneProps = DynamicZoneProps<{ name: string }>;
 
-const UmbracoDynamicZone: FC<UmbracoDynamicZoneProps> = (props) => (
+const UmbracoDynamicZone: FC<UmbracoDynamicZoneProps> = async (props) => (
   <DynamicZone blockKeyName="name" {...props} />
 );
 

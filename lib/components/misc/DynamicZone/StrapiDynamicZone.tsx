@@ -4,7 +4,7 @@ import DynamicZone, { DynamicZoneProps } from '.';
 
 export type StrapiDynamicZoneProps = DynamicZoneProps<{ __typename: string }>;
 
-const StrapiDynamicZone: FC<StrapiDynamicZoneProps> = (props) => (
+const StrapiDynamicZone: FC<StrapiDynamicZoneProps> = async (props) => (
   <DynamicZone blockKeyName="__typename" {...props} />
 );
 

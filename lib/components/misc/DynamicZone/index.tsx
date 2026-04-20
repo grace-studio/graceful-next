@@ -12,7 +12,7 @@ type DynamicZoneInternalProps = DynamicZoneProps<object> & {
   blockKeyName: string;
 };
 
-const DynamicZone: FC<DynamicZoneInternalProps> = ({
+const DynamicZone: FC<DynamicZoneInternalProps> = async ({
   blockKeyName,
   blockMapping = {},
   blocks = [],
